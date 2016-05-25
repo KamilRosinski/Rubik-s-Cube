@@ -1,26 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.konar.rubikscube.controller.CubeSolverController">
-	<center>
-		<GridPane fx:id="cubeLayout" gridLinesVisible="true" hgap="1.0" vgap="1.0" BorderPane.alignment="CENTER">
-			<children>
-			</children>
-		</GridPane>
-	</center>
-	<top>
-		<Button text="java-Buddy" />
-	</top>
-	<left>
-		<Button text="Who are you?" />
-	</left>
-	<right>
-		<Button text="Click Me!" />
-	</right>
-	<bottom>
-		<Button text=":)" />
-	</bottom>
-</BorderPane>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.konar.rubikscube.controller.CubeSolverController">
+   <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+      	<GridPane fx:id="cubeLayout" alignment="CENTER" hgap="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="400.0" vgap="1.0">
+      		<columnConstraints>
+      			<ColumnConstraints hgrow="ALWAYS" maxWidth="40.0" />
+      			<ColumnConstraints hgrow="ALWAYS" maxWidth="40.0" />
+      			<ColumnConstraints hgrow="ALWAYS" maxWidth="40.0" />
+      			<ColumnConstraints hgrow="SOMETIMES" minWidth="5.0" />
+      			<ColumnConstraints hgrow="ALWAYS" maxWidth="40.0" />
+      			<ColumnConstraints hgrow="ALWAYS" maxWidth="40.0" />
+      			<ColumnConstraints hgrow="ALWAYS" maxWidth="40.0" />
+      			<ColumnConstraints hgrow="SOMETIMES" minWidth="5.0" />
+      			<ColumnConstraints hgrow="ALWAYS" maxWidth="40.0" />
+      			<ColumnConstraints hgrow="ALWAYS" maxWidth="40.0" />
+      			<ColumnConstraints hgrow="ALWAYS" maxWidth="40.0" />
+      			<ColumnConstraints hgrow="SOMETIMES" minWidth="5.0" />
+      			<ColumnConstraints hgrow="ALWAYS" maxWidth="40.0" />
+      			<ColumnConstraints hgrow="ALWAYS" maxWidth="40.0" />
+      			<ColumnConstraints hgrow="ALWAYS" maxWidth="40.0" />
+      		</columnConstraints>
+      		<rowConstraints>
+      			<RowConstraints maxHeight="40.0" vgrow="ALWAYS" />
+      			<RowConstraints maxHeight="40.0" vgrow="ALWAYS" />
+      			<RowConstraints maxHeight="40.0" vgrow="ALWAYS" />
+      			<RowConstraints minHeight="5.0" vgrow="SOMETIMES" />
+      			<RowConstraints maxHeight="40.0" vgrow="ALWAYS" />
+      			<RowConstraints maxHeight="40.0" vgrow="ALWAYS" />
+      			<RowConstraints maxHeight="40.0" vgrow="ALWAYS" />
+      			<RowConstraints minHeight="5.0" vgrow="SOMETIMES" />
+      			<RowConstraints maxHeight="40.0" vgrow="ALWAYS" />
+      			<RowConstraints maxHeight="40.0" vgrow="ALWAYS" />
+      			<RowConstraints maxHeight="40.0" vgrow="ALWAYS" />
+      		</rowConstraints>
+            <VBox.margin>
+               <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </VBox.margin>
+      	</GridPane>
+         <HBox alignment="TOP_CENTER" prefHeight="13.0" prefWidth="600.0" spacing="100.0">
+            <children>
+               <Button mnemonicParsing="false" text="%button.solve">
+                  <HBox.margin>
+                     <Insets />
+                  </HBox.margin></Button>
+               <Button mnemonicParsing="false" text="%button.reset" />
+            </children>
+            <padding>
+               <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </padding>
+         </HBox>
+         <Label text="%label.solution">
+            <VBox.margin>
+               <Insets left="15.0" />
+            </VBox.margin></Label>
+         <ListView prefHeight="275.0" prefWidth="570.0">
+            <VBox.margin>
+               <Insets bottom="15.0" left="15.0" right="15.0" top="5.0" />
+            </VBox.margin>
+         </ListView>
+      </children>
+   </VBox>
+</AnchorPane>
