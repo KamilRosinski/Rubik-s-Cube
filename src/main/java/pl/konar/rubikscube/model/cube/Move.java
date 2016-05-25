@@ -24,4 +24,9 @@ public enum Move {
 		return angle;
 	}
 
+	@Override
+	public String toString() {
+		return face.toString() + "\t" + angle;
+	}
+	
 }

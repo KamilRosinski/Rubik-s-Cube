@@ -10,7 +10,7 @@ public class ThistlethwaiteSolver implements CubeSolver {
 
 	@Override
 	public List<Move> solve() {
-		return Arrays.asList(Move.F1, Move.U2, Move.R1);
+		return Arrays.asList(Move.F1, Move.U2, Move.R1, Move.L1, Move.D2);
 	}
 
 }

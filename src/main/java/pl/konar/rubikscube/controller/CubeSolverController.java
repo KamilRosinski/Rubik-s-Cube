@@ -6,7 +6,9 @@ import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
+import pl.konar.rubikscube.model.cube.Move;
 import pl.konar.rubikscube.model.cube.ObservableCube;
 
 public class CubeSolverController {
@@ -35,9 +37,17 @@ public class CubeSolverController {
 	private Button solveButton;
 
 	@FXML
+	private ListView<Move> solutionList;
+
+	@FXML
 	private void initialize() {
 		initializeCubeLayout();
 		solveButton.disableProperty().bind(Bindings.not(model.isSolvableProperty()));
+		solutionList.itemsProperty().bind(model.solutionProperty());
+		solutionList.getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> {
+			System.err.println(oldVal + "\t" + newVal);
+		});
+		solutionList.setDisable(true);
 	}
 
 	private void initializeCubeLayout() {
@@ -68,12 +78,17 @@ public class CubeSolverController {
 
 	@FXML
 	private void solveButtonAction() {
-		System.err.println("Solve!");
+		model.solve();
+		cubeLayout.setDisable(true);
+		solutionList.setDisable(false);
 	}
 
 	@FXML
 	private void resetButtonAction() {
 		model.reset();
+		cubeLayout.setDisable(false);
+		solutionList.setDisable(true);
+		model.getSolution().clear();
 	}
 
 }
