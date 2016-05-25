@@ -1,4 +1,4 @@
-package pl.konar.rubikscube.model;
+package pl.konar.rubikscube.model.colour;
 
 public enum Colour {
 
@@ -18,6 +18,10 @@ public enum Colour {
 	
 	public Colour getNextColour() {
 		return values()[(ordinal() + 1) % values().length];
+	}
+	
+	public Colour getPreviousColour() {
+		return values()[(ordinal() + values().length - 1) % values().length];
 	}
 	
 }
