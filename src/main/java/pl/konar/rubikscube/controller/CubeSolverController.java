@@ -42,12 +42,15 @@ public class CubeSolverController {
 	@FXML
 	private void initialize() {
 		initializeCubeLayout();
+		cubeLayout.disableProperty().bind(model.isSolvedProperty());
 		solveButton.disableProperty().bind(Bindings.not(model.isSolvableProperty()));
+		solutionList.disableProperty().bind(Bindings.not(model.isSolvedProperty()));
 		solutionList.itemsProperty().bind(model.solutionProperty());
 		solutionList.getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> {
-			System.err.println(oldVal + "\t" + newVal);
+			if (!newVal.equals(-1)) {
+				model.applyPartialSolution(oldVal.equals(-1) ? 0 : oldVal.intValue(), newVal.intValue());
+			}
 		});
-		solutionList.setDisable(true);
 	}
 
 	private void initializeCubeLayout() {
@@ -79,16 +82,12 @@ public class CubeSolverController {
 	@FXML
 	private void solveButtonAction() {
 		model.solve();
-		cubeLayout.setDisable(true);
-		solutionList.setDisable(false);
+		solutionList.getSelectionModel().select(0);
 	}
 
 	@FXML
 	private void resetButtonAction() {
 		model.reset();
-		cubeLayout.setDisable(false);
-		solutionList.setDisable(true);
-		model.getSolution().clear();
 	}
 
 }

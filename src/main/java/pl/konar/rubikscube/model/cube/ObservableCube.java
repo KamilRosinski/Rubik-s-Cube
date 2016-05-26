@@ -20,6 +20,7 @@ public class ObservableCube {
 	private static final int NUMBER_OF_FACETS = 54;
 	private CubeSolver solver = new ThistlethwaiteSolver();
 	private List<ObjectProperty<Colour>> facetColours = new ArrayList<>();
+	private BooleanProperty isSolved = new SimpleBooleanProperty(false);
 	private BooleanProperty isSolvable = new SimpleBooleanProperty(false);
 	private ListProperty<Move> solution = new SimpleListProperty<>(FXCollections.observableArrayList());
 
@@ -47,22 +48,23 @@ public class ObservableCube {
 			facetColour.set(Colour.TRANSPARENT);
 		}
 		isSolvable.set(false);
+		isSolved.set(false);
+		solution.get().clear();
 	}
 
 	public void solve() {
-//		solution.clear();
-//		for (Move move : solver.solve()) {
-//			solution.add(move);
-//		}
 		solution.setAll(solver.solve());
+		solution.add(0, Move.E);
+		isSolved.set(true);
+		isSolvable.set(false);
 	}
-
-	// private void applyMove(Move move) {
-	// System.err.println(move);
-	// }
 
 	public ObjectProperty<Colour> getFacetColour(int index) {
 		return facetColours.get(index);
+	}
+
+	public BooleanProperty isSolvedProperty() {
+		return isSolved;
 	}
 
 	public BooleanProperty isSolvableProperty() {
@@ -72,9 +74,33 @@ public class ObservableCube {
 	public ListProperty<Move> solutionProperty() {
 		return solution;
 	}
-	
+
 	public ObservableList<Move> getSolution() {
 		return solution.get();
+	}
+
+	public void applyPartialSolution(int oldIndex, int newIndex) {
+		List<Move> result = new ArrayList<>();
+		if (oldIndex < newIndex) {
+			for (int i = oldIndex + 1; i <= newIndex; ++i) {
+				result.add(solution.get(i));
+			}
+		} else {
+			for (int i = oldIndex - 1; i >= newIndex; --i) {
+				result.add(solution.get(i));
+			}
+		}
+		applyMoves(result);
+	}
+
+	private void applyMoves(List<Move> moves) {
+		for (Move move : moves) {
+			applyMove(move);
+		}
+	}
+
+	private void applyMove(Move move) {
+		System.err.println(move);
 	}
 
 }

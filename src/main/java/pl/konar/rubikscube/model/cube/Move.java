@@ -2,6 +2,7 @@ package pl.konar.rubikscube.model.cube;
 
 public enum Move {
 
+	E(Face.FRONT, 0), //
 	F1(Face.FRONT, 1), F2(Face.FRONT, 2), F3(Face.FRONT, 3), //
 	B1(Face.BACK, 1), B2(Face.BACK, 2), B3(Face.BACK, 3), //
 	L1(Face.LEFT, 1), L2(Face.LEFT, 2), L3(Face.LEFT, 3), //
