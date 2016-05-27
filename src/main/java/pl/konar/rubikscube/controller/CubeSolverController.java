@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import pl.konar.rubikscube.model.cube.Move;
-import pl.konar.rubikscube.model.cube.ObservableCube;
+import pl.konar.rubikscube.model.cube.SolverModel;
 
 public class CubeSolverController {
 
@@ -19,7 +19,7 @@ public class CubeSolverController {
 	private static final int NUMBER_OF_FACES = 6;
 	private static final int[] FACE_X_OFFSETS = { 4, 0, 4, 8, 12, 4 };
 	private static final int[] FACE_Y_OFFSETS = { 0, 4, 4, 4, 4, 8 };
-	private ObservableCube model = new ObservableCube();
+	private SolverModel model = new SolverModel();
 
 	@FXML
 	private URL location;
@@ -63,18 +63,18 @@ public class CubeSolverController {
 	private void initializeFacetButton(Button button, int wall, int row, int column) {
 		button.setPrefSize(BUTTON_SIZE, BUTTON_SIZE);
 		int facetNumber = model
-				.getNthFacetNumber(NUMBER_OF_ROWS * NUMBER_OF_COLUMNS * wall + NUMBER_OF_COLUMNS * row + column);
+				.getCubeNthFacetNumber(NUMBER_OF_ROWS * NUMBER_OF_COLUMNS * wall + NUMBER_OF_COLUMNS * row + column);
 		button.setOnAction(event -> model.changeColour(facetNumber));
 		bindButtonToFacet(button, facetNumber);
 	}
 
 	private void bindButtonToFacet(Button button, int buttonFacetNumber) {
 		button.styleProperty()
-		.bind(Bindings.concat(
-				"-fx-border-color: black; -fx-border-radius: 4px; -fx-background-insets: 2; -fx-background-radius: 4px; -fx-background-color: ",
-				Bindings.valueAt(model.facetsProperty(), buttonFacetNumber)));
+				.bind(Bindings.concat(
+						"-fx-border-color: black; -fx-border-radius: 4px; -fx-background-insets: 2; -fx-background-radius: 4px; -fx-background-color: ",
+						Bindings.valueAt(model.cubeFacetsProperty(), buttonFacetNumber)));
 	}
-	
+
 	private void initializeSolveButton() {
 		solveButton.disableProperty().bind(Bindings.not(model.isSolvableProperty()));
 	}
@@ -101,12 +101,12 @@ public class CubeSolverController {
 
 	@FXML
 	private void resetButtonAction() {
-		model.reset();
+		model.resetCube();
 	}
 
 	@FXML
 	private void fillBUttonAction() {
-		model.fill();
+		model.fillCube();
 	}
 
 }
