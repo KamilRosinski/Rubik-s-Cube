@@ -17,8 +17,8 @@ public class CubeSolverController {
 	private static final int NUMBER_OF_ROWS = 3;
 	private static final int NUMBER_OF_COLUMNS = 3;
 	private static final int NUMBER_OF_FACES = 6;
-	private static final int[] WALL_X_OFFSETS = { 4, 0, 4, 8, 12, 4 };
-	private static final int[] WALL_Y_OFFSETS = { 0, 4, 4, 4, 4, 8 };
+	private static final int[] FACE_X_OFFSETS = { 4, 0, 4, 8, 12, 4 };
+	private static final int[] FACE_Y_OFFSETS = { 0, 4, 4, 4, 4, 8 };
 	private ObservableCube model = new ObservableCube();
 
 	@FXML
@@ -44,7 +44,39 @@ public class CubeSolverController {
 		initializeCubeLayout();
 		initializeSolveButton();
 		initializeSolutionList();
-		fillButton.disableProperty().bind(model.isSolvedProperty());
+		initializeFillButton();
+	}
+
+	private void initializeCubeLayout() {
+		cubeLayout.disableProperty().bind(model.isSolvedProperty());
+		for (int face = 0; face < NUMBER_OF_FACES; ++face) {
+			for (int row = 0; row < NUMBER_OF_ROWS; ++row) {
+				for (int column = 0; column < NUMBER_OF_COLUMNS; ++column) {
+					Button button = new Button();
+					initializeFacetButton(button, face, row, column);
+					cubeLayout.add(button, FACE_X_OFFSETS[face] + column, FACE_Y_OFFSETS[face] + row);
+				}
+			}
+		}
+	}
+
+	private void initializeFacetButton(Button button, int wall, int row, int column) {
+		button.setPrefSize(BUTTON_SIZE, BUTTON_SIZE);
+		int facetNumber = model
+				.getNthFacetNumber(NUMBER_OF_ROWS * NUMBER_OF_COLUMNS * wall + NUMBER_OF_COLUMNS * row + column);
+		button.setOnAction(event -> model.changeColour(facetNumber));
+		bindButtonToFacet(button, facetNumber);
+	}
+
+	private void bindButtonToFacet(Button button, int buttonFacetNumber) {
+		button.styleProperty()
+		.bind(Bindings.concat(
+				"-fx-border-color: black; -fx-border-radius: 4px; -fx-background-insets: 2; -fx-background-radius: 4px; -fx-background-color: ",
+				Bindings.valueAt(model.facetsProperty(), buttonFacetNumber)));
+	}
+	
+	private void initializeSolveButton() {
+		solveButton.disableProperty().bind(Bindings.not(model.isSolvableProperty()));
 	}
 
 	private void initializeSolutionList() {
@@ -57,36 +89,8 @@ public class CubeSolverController {
 		});
 	}
 
-	private void initializeSolveButton() {
-		solveButton.disableProperty().bind(Bindings.not(model.isSolvableProperty()));
-	}
-
-	private void initializeCubeLayout() {
-		for (int face = 0; face < NUMBER_OF_FACES; ++face) {
-			for (int row = 0; row < NUMBER_OF_ROWS; ++row) {
-				for (int column = 0; column < NUMBER_OF_COLUMNS; ++column) {
-					Button button = new Button();
-					initializeButton(button, face, row, column);
-					cubeLayout.add(button, WALL_X_OFFSETS[face] + column, WALL_Y_OFFSETS[face] + row);
-				}
-			}
-		}
-		cubeLayout.disableProperty().bind(model.isSolvedProperty());
-	}
-
-	private void initializeButton(Button button, int wall, int row, int column) {
-		button.setPrefSize(BUTTON_SIZE, BUTTON_SIZE);
-		int facetNumber = model
-				.getNthFacetNumber(NUMBER_OF_ROWS * NUMBER_OF_COLUMNS * wall + NUMBER_OF_COLUMNS * row + column);
-		button.setOnAction(event -> model.changeColour(facetNumber));
-		bindButtonToFacet(button, facetNumber);
-	}
-
-	private void bindButtonToFacet(Button button, int buttonFacetNumber) {
-		button.styleProperty()
-				.bind(Bindings.concat(
-						"-fx-border-color: black; -fx-border-radius: 4px; -fx-background-insets: 2; -fx-background-radius: 4px; -fx-background-color: ",
-						model.getFacetColour(buttonFacetNumber)));
+	private void initializeFillButton() {
+		fillButton.disableProperty().bind(model.isSolvedProperty());
 	}
 
 	@FXML
@@ -101,7 +105,7 @@ public class CubeSolverController {
 	}
 
 	@FXML
-	public void fillBUttonAction() {
+	private void fillBUttonAction() {
 		model.fill();
 	}
 
