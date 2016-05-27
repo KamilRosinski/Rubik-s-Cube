@@ -17,9 +17,6 @@ public class CubeSolverController {
 	private static final int NUMBER_OF_ROWS = 3;
 	private static final int NUMBER_OF_COLUMNS = 3;
 	private static final int NUMBER_OF_FACES = 6;
-	private static final int[] FACETS_ORDER = { 4, 13, 22, 31, 40, 49, 39, 1, 5, 28, 19, 7, 3, 10, 41, 12, 37, 32, 23,
-			30, 21, 14, 43, 52, 50, 34, 25, 46, 48, 16, 38, 0, 9, 36, 29, 2, 20, 8, 27, 18, 11, 6, 44, 51, 15, 42, 53,
-			35, 26, 33, 47, 24, 45, 17 };
 	private static final int[] WALL_X_OFFSETS = { 4, 0, 4, 8, 12, 4 };
 	private static final int[] WALL_Y_OFFSETS = { 0, 4, 4, 4, 4, 8 };
 	private ObservableCube model = new ObservableCube();
@@ -37,13 +34,20 @@ public class CubeSolverController {
 	private Button solveButton;
 
 	@FXML
+	private Button fillButton;
+
+	@FXML
 	private ListView<Move> solutionList;
 
 	@FXML
 	private void initialize() {
 		initializeCubeLayout();
-		cubeLayout.disableProperty().bind(model.isSolvedProperty());
-		solveButton.disableProperty().bind(Bindings.not(model.isSolvableProperty()));
+		initializeSolveButton();
+		initializeSolutionList();
+		fillButton.disableProperty().bind(model.isSolvedProperty());
+	}
+
+	private void initializeSolutionList() {
 		solutionList.disableProperty().bind(Bindings.not(model.isSolvedProperty()));
 		solutionList.itemsProperty().bind(model.solutionProperty());
 		solutionList.getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> {
@@ -53,21 +57,27 @@ public class CubeSolverController {
 		});
 	}
 
+	private void initializeSolveButton() {
+		solveButton.disableProperty().bind(Bindings.not(model.isSolvableProperty()));
+	}
+
 	private void initializeCubeLayout() {
 		for (int face = 0; face < NUMBER_OF_FACES; ++face) {
-			for (int row = 0; row < NUMBER_OF_COLUMNS; ++row) {
-				for (int column = 0; column < NUMBER_OF_ROWS; ++column) {
+			for (int row = 0; row < NUMBER_OF_ROWS; ++row) {
+				for (int column = 0; column < NUMBER_OF_COLUMNS; ++column) {
 					Button button = new Button();
 					initializeButton(button, face, row, column);
 					cubeLayout.add(button, WALL_X_OFFSETS[face] + column, WALL_Y_OFFSETS[face] + row);
 				}
 			}
 		}
+		cubeLayout.disableProperty().bind(model.isSolvedProperty());
 	}
 
 	private void initializeButton(Button button, int wall, int row, int column) {
 		button.setPrefSize(BUTTON_SIZE, BUTTON_SIZE);
-		int facetNumber = FACETS_ORDER[NUMBER_OF_ROWS * NUMBER_OF_COLUMNS * wall + NUMBER_OF_COLUMNS * row + column];
+		int facetNumber = model
+				.getNthFacetNumber(NUMBER_OF_ROWS * NUMBER_OF_COLUMNS * wall + NUMBER_OF_COLUMNS * row + column);
 		button.setOnAction(event -> model.changeColour(facetNumber));
 		bindButtonToFacet(button, facetNumber);
 	}
@@ -88,6 +98,11 @@ public class CubeSolverController {
 	@FXML
 	private void resetButtonAction() {
 		model.reset();
+	}
+
+	@FXML
+	public void fillBUttonAction() {
+		model.fill();
 	}
 
 }

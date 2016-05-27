@@ -4,7 +4,7 @@ public enum Colour {
 
 //	BLUE, RED, ORANGE, GREEN, WHITE, YELLOW;
 	
-	TRANSPARENT("transparent"), BLUE("blue"), RED("red"), ORANGE("orange"), GREEN("green"), WHITE("white"), YELLOW("yellow");
+	TRANSPARENT("transparent"), WHITE("white"), RED("red"), BLUE("blue"), ORANGE("orange"), GREEN("green"), YELLOW("yellow");
 	private String colourName;
 	
 	private Colour(String colourName) {

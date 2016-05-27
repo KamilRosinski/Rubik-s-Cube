@@ -29,5 +29,9 @@ public enum Move {
 	public String toString() {
 		return face.toString() + "\t" + angle;
 	}
-	
+
+	public Move inverse() {
+		return values()[ordinal() == 0 ? ordinal() : ordinal() + 2 * (1 - (ordinal() - 1) % 3)];
+	}
+
 }
