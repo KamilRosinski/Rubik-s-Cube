@@ -1,25 +1,33 @@
 package pl.konar.rubikscube.controller;
 
 import java.net.URL;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.GridPane;
+import pl.konar.rubikscube.model.cube.CubeConstants;
 import pl.konar.rubikscube.model.cube.Move;
 import pl.konar.rubikscube.model.cube.SolverModel;
 
 public class CubeSolverController {
 
 	private static final double BUTTON_SIZE = 40;
-	private static final int NUMBER_OF_ROWS = 3;
-	private static final int NUMBER_OF_COLUMNS = 3;
-	private static final int NUMBER_OF_FACES = 6;
 	private static final int[] FACE_X_OFFSETS = { 4, 0, 4, 8, 12, 4 };
 	private static final int[] FACE_Y_OFFSETS = { 0, 4, 4, 4, 4, 8 };
+
 	private SolverModel model = new SolverModel();
+
+	private Alert alert = new Alert(AlertType.INFORMATION);
 
 	@FXML
 	private URL location;
@@ -45,13 +53,14 @@ public class CubeSolverController {
 		initializeSolveButton();
 		initializeSolutionList();
 		initializeFillButton();
+		initializeAlert();
 	}
 
 	private void initializeCubeLayout() {
 		cubeLayout.disableProperty().bind(model.isSolvedProperty());
-		for (int face = 0; face < NUMBER_OF_FACES; ++face) {
-			for (int row = 0; row < NUMBER_OF_ROWS; ++row) {
-				for (int column = 0; column < NUMBER_OF_COLUMNS; ++column) {
+		for (int face = 0; face < CubeConstants.NUMBER_OF_FACES; ++face) {
+			for (int row = 0; row < CubeConstants.NUMBER_OF_ROWS_PER_FACE; ++row) {
+				for (int column = 0; column < CubeConstants.NUMBER_OF_COLUMNS_PER_FACE; ++column) {
 					Button button = new Button();
 					initializeFacetButton(button, face, row, column);
 					cubeLayout.add(button, FACE_X_OFFSETS[face] + column, FACE_Y_OFFSETS[face] + row);
@@ -62,8 +71,8 @@ public class CubeSolverController {
 
 	private void initializeFacetButton(Button button, int wall, int row, int column) {
 		button.setPrefSize(BUTTON_SIZE, BUTTON_SIZE);
-		int facetNumber = model
-				.getCubeNthFacetNumber(NUMBER_OF_ROWS * NUMBER_OF_COLUMNS * wall + NUMBER_OF_COLUMNS * row + column);
+		int facetNumber = model.getCubeNthFacetNumber(CubeConstants.NUMBER_OF_FACETS_PER_FACE * wall
+				+ CubeConstants.NUMBER_OF_COLUMNS_PER_FACE * row + column);
 		button.setOnAction(event -> model.changeColour(facetNumber));
 		bindButtonToFacet(button, facetNumber);
 	}
@@ -93,10 +102,38 @@ public class CubeSolverController {
 		fillButton.disableProperty().bind(model.isSolvedProperty());
 	}
 
+	private void initializeAlert() {
+		alert.setTitle(resources.getString("alert.title"));
+		alert.setHeaderText(resources.getString("alert.header"));
+		alert.setContentText(resources.getString("alert.content"));
+		alert.getButtonTypes().setAll(ButtonType.CANCEL);
+		alert.setGraphic(new ProgressIndicator());
+	}
+
 	@FXML
 	private void solveButtonAction() {
-		model.solve();
-		solutionList.getSelectionModel().select(0);
+		Task<List<Move>> solverTask = new Task<List<Move>>() {
+
+			@Override
+			protected List<Move> call() throws Exception {
+				return model.solve();
+			}
+
+			@Override
+			protected void succeeded() {
+				model.setSolution(getValue());
+				model.setIsSolved(true);
+				model.setIsSolvable(false);
+				solutionList.getSelectionModel().select(0);
+				alert.hide();
+			}
+
+		};
+		new Thread(solverTask).start();
+		Optional<ButtonType> alertResult = alert.showAndWait();
+		if (alertResult.isPresent() && solverTask.isRunning()) {
+			solverTask.cancel();
+		}
 	}
 
 	@FXML

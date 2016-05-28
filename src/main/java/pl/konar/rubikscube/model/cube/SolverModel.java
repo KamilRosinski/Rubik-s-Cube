@@ -13,14 +13,6 @@ import pl.konar.rubikscube.model.solver.ThistlethwaiteSolver;
 
 public class SolverModel {
 
-	private static final int[][][] PERMUTATIONS = {
-			{ { 34, 52, 30, 14 }, { 50, 25, 21, 23 }, { 41, 53, 38, 1 }, { 42, 36, 5, 7 }, { 35, 46, 39, 32 } },
-			{ { 34, 52, 30, 14 }, { 50, 25, 21, 23 }, { 41, 53, 38, 1 }, { 42, 36, 5, 7 }, { 35, 46, 39, 32 } },
-			{ { 34, 52, 30, 14 }, { 50, 25, 21, 23 }, { 41, 53, 38, 1 }, { 42, 36, 5, 7 }, { 35, 46, 39, 32 } },
-			{ { 34, 52, 30, 14 }, { 50, 25, 21, 23 }, { 41, 53, 38, 1 }, { 42, 36, 5, 7 }, { 35, 46, 39, 32 } },
-			{ { 34, 52, 30, 14 }, { 50, 25, 21, 23 }, { 41, 53, 38, 1 }, { 42, 36, 5, 7 }, { 35, 46, 39, 32 } },
-			{ { 14, 30, 52, 34 }, { 23, 21, 25, 50 }, { 1, 38, 53, 41 }, { 7, 5, 36, 42 }, { 32, 39, 46, 35 } } };
-
 	private ObservableCube cube = new ObservableCube();
 	private ListProperty<Move> solution = new SimpleListProperty<>(FXCollections.observableArrayList());
 	private BooleanProperty isSolved = new SimpleBooleanProperty(false);
@@ -31,12 +23,12 @@ public class SolverModel {
 		checkIfSolvable();
 	}
 
-	private void setNextColour(int facetNumber) {
-		cube.setNextColour(facetNumber);
-	}
-
 	private void checkIfSolvable() {
 		isSolvable.set(true);
+	}
+
+	private void setNextColour(int facetNumber) {
+		cube.setNextColour(facetNumber);
 	}
 
 	public void resetCube() {
@@ -46,14 +38,11 @@ public class SolverModel {
 		isSolved.set(false);
 	}
 
-	public void solve() {
-		solution.clear();
-		solution.add(Move.E);
-		for (Move move : ThistlethwaiteSolver.solve()) {
-			solution.add(move);
-		}
-		isSolved.set(true);
-		isSolvable.set(false);
+	public List<Move> solve() {
+		List<Move> result = new ArrayList<>();
+		result.add(Move.E);
+		result.addAll(ThistlethwaiteSolver.solve());
+		return result;
 	}
 
 	public ListProperty<Colour> cubeFacetsProperty() {
@@ -64,12 +53,24 @@ public class SolverModel {
 		return isSolved;
 	}
 
+	public void setIsSolved(boolean isSolved) {
+		this.isSolved.set(isSolved);
+	}
+
 	public BooleanProperty isSolvableProperty() {
 		return isSolvable;
 	}
 
+	public void setIsSolvable(boolean isSolvable) {
+		this.isSolvable.set(isSolvable);
+	}
+
 	public ListProperty<Move> solutionProperty() {
 		return solution;
+	}
+
+	public void setSolution(List<Move> solution) {
+		this.solution.get().setAll(solution);
 	}
 
 	public void applyPartialSolution(int oldIndex, int newIndex) {
@@ -88,24 +89,12 @@ public class SolverModel {
 
 	private void applyMoves(List<Move> moves) {
 		for (Move move : moves) {
-			applyMove(move);
+			rotateCube(move);
 		}
 	}
 
-	private void applyMove(Move move) {
-		for (int i = 0; i < move.getAngle(); ++i) {
-			for (int[] permutation : PERMUTATIONS[move.getFace().ordinal()]) {
-				Colour tmp = cube
-						.getColour(permutation[0]) /*
-													 * facets.get(permutation[0])
-													 *//* .get() */;
-				for (int n = 0; n < permutation.length; ++n) {
-					cube.setColour(permutation[n], cube.getColour(permutation[(n + 1)
-							% permutation.length])/* .get() */);
-				}
-				cube.setColour(permutation[permutation.length - 1], tmp);
-			}
-		}
+	private void rotateCube(Move move) {
+		cube.applyMove(move);
 	}
 
 	public void fillCube() {
