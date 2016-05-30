@@ -1,5 +1,7 @@
 package pl.konar.rubikscube.model.cube;
 
+import java.util.List;
+
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -29,15 +31,15 @@ public class ObservableCube {
 	public ListProperty<Colour> facetsProperty() {
 		return facets;
 	}
-	
+
 	public Colour getColour(int facetNumber) {
 		return facets.get(facetNumber);
 	}
-	
+
 	public void setColour(int facetNumber, Colour colour) {
 		facets.set(facetNumber, colour);
 	}
-	
+
 	public void setNextColour(int facetNumber) {
 		setColour(facetNumber, getColour(facetNumber).getNextColour());
 	}
@@ -50,10 +52,11 @@ public class ObservableCube {
 
 	public void fill() {
 		for (int facetNumber = 0; facetNumber < CubeConstants.NUMBER_OF_FACETS; ++facetNumber) {
-			setColour(FACETS_ORDER[facetNumber], Colour.values()[facetNumber / CubeConstants.NUMBER_OF_FACETS_PER_FACE + 1]);
+			setColour(FACETS_ORDER[facetNumber],
+					Colour.values()[facetNumber / CubeConstants.NUMBER_OF_FACETS_PER_FACE + 1]);
 		}
 	}
-	
+
 	public int getNthFacetNumber(int index) {
 		return FACETS_ORDER[index];
 	}
@@ -69,5 +72,9 @@ public class ObservableCube {
 			}
 		}
 	}
-	
+
+	public List<Colour> facetslist() {
+		return facets.get();
+	}
+
 }

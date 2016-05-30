@@ -41,7 +41,7 @@ public class SolverModel {
 	public List<Move> solve() {
 		List<Move> result = new ArrayList<>();
 		result.add(Move.E);
-		result.addAll(ThistlethwaiteSolver.solve());
+		result.addAll(ThistlethwaiteSolver.solve(cube));
 		return result;
 	}
 

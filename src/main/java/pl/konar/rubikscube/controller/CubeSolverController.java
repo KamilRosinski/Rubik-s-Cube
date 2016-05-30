@@ -74,7 +74,6 @@ public class CubeSolverController {
 		int facetNumber = model.getCubeNthFacetNumber(CubeConstants.NUMBER_OF_FACETS_PER_FACE * wall
 				+ CubeConstants.NUMBER_OF_COLUMNS_PER_FACE * row + column);
 		button.setOnAction(event -> {
-			System.out.println("Facet: " + facetNumber);
 			model.changeColour(facetNumber);
 		});
 		bindButtonToFacet(button, facetNumber);
