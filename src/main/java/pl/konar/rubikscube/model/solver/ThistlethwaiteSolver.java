@@ -7,7 +7,7 @@ import pl.konar.rubikscube.model.cube.Move;
 
 public class ThistlethwaiteSolver {
 
-	private static final int DELAY_MS = 3000;
+	private static final int DELAY_MS = 250;
 
 	public static List<Move> solve() {
 		try {
@@ -15,7 +15,7 @@ public class ThistlethwaiteSolver {
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}
-		return Arrays.asList(Move.F1, Move.U2, Move.R1, Move.L1, Move.D2);
+		return Arrays.asList(Move.F1, Move.B3, Move.L1, Move.F2, Move.U3, Move.D2, Move.R2);
 	}
 
 }
