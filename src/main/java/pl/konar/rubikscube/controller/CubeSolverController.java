@@ -24,7 +24,7 @@ import pl.konar.rubikscube.model.cube.exception.CubeNotSolvableException;
 public class CubeSolverController {
 
 	private static final double BUTTON_SIZE = 40;
-	private static final int[] FACE_X_OFFSETS = { 4, 0, 4, 8, 12, 4 };
+	private static final int[] FACE_X_OFFSETS = { 4, 12, 8, 4, 0, 4 };
 	private static final int[] FACE_Y_OFFSETS = { 0, 4, 4, 4, 4, 8 };
 
 	private SolverModel model = new SolverModel();
@@ -117,7 +117,7 @@ public class CubeSolverController {
 	@FXML
 	private void solveButtonAction() {
 		Task<List<Move>> solverTask = new Task<List<Move>>() {
-			
+
 			@Override
 			protected List<Move> call() throws CubeNotSolvableException, CubeNotMappableException {
 				return model.solve();
@@ -131,7 +131,7 @@ public class CubeSolverController {
 				solutionList.getSelectionModel().select(0);
 				alert.hide();
 			}
-			
+
 			@Override
 			protected void failed() {
 				alert.hide();

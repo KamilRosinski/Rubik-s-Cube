@@ -28,7 +28,7 @@ public class SolverModel {
 	}
 
 	private void checkIfSolvable() {
-		isSolvable.set(CubeValidator.checkSolvability(cube));
+		isSolvable.set(CubeValidator.checkSolvability(cube.getColours()));
 	}
 
 	private void setNextColour(int facetNumber) {
@@ -103,7 +103,8 @@ public class SolverModel {
 
 	public void fillCube() {
 		cube.fill();
-		isSolvable.set(true);
+		// isSolvable.set(true);
+		checkIfSolvable();
 	}
 
 	public int getCubeNthFacetNumber(int index) {

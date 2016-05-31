@@ -9,20 +9,29 @@ public class Cubicle {
 
 	private final List<Colour> facets;
 
-	public Cubicle(Colour[] colours) {
+	public Cubicle(Colour... colours) {
 		facets = Arrays.asList(colours);
 	}
 
-	public List<Colour> getFacets() {
+	public List<Colour> getColours() {
 		return facets;
 	}
 
-	public Colour getFacet(int index) {
+	public Colour getColour(int index) {
 		return facets.get(index);
 	}
 
 	public int relativeTwist(Cubicle cubicle) {
-		return (equals(cubicle) && !facets.isEmpty()) ? cubicle.getFacets().indexOf(facets.get(0)) : -1;
+		return (equals(cubicle) && !facets.isEmpty()) ? cubicle.getColours().indexOf(facets.get(0)) : -1;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = 0;
+		for (Object obj : facets) {
+			result += obj.hashCode();
+		}
+		return result;
 	}
 
 	@Override

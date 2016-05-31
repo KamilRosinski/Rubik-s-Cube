@@ -1,5 +1,6 @@
 package pl.konar.rubikscube.model.cube;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.property.ListProperty;
@@ -15,10 +16,16 @@ public class ObservableCube {
 			{ { 32, 44, 53, 40 }, { 13, 15, 29, 21 }, { 30, 43, 51, 41 }, { 14, 28, 20, 12 }, { 42, 52, 39, 31 } }, // L
 			{ { 38, 49, 47, 34 }, { 9, 19, 25, 17 }, { 36, 50, 45, 35 }, { 18, 24, 16, 8 }, { 48, 46, 33, 37 } }, // R
 			{ { 31, 41, 37, 35 }, { 12, 11, 8, 7 }, { 32, 39, 38, 33 }, { 13, 10, 9, 6 }, { 40, 36, 34, 30 } }, // U
-			{ { 52, 43, 46, 50 }, { 28, 23, 24, 27 }, { 53, 42, 47, 48 }, { 29, 22, 25, 26 }, { 44, 45, 49, 51 } } }; // D
-	private static final int[] FACETS_ORDER = { 31, 7, 35, 12, 0, 8, 41, 11, 37, 32, 13, 40, 15, 1, 21, 44, 29, 53, 39,
-			10, 36, 20, 2, 18, 51, 26, 48, 38, 9, 34, 19, 3, 17, 49, 25, 47, 33, 6, 30, 16, 4, 14, 45, 22, 42, 52, 27,
-			50, 28, 5, 24, 43, 23, 46 };
+			{ { 52, 43, 46, 50 }, { 28, 23, 24, 27 }, { 53, 42, 47, 48 }, { 29, 22, 25, 26 }, { 44, 45, 49, 51 } } // D
+	};
+	private static final int[] FACETS_ORDER = { //
+			31, 7, 35, 12, 0, 8, 41, 11, 37, // 0
+			33, 6, 30, 16, 1, 14, 45, 22, 42, // 1
+			38, 9, 34, 19, 2, 17, 49, 25, 47, // 2
+			39, 10, 36, 20, 3, 18, 51, 26, 48, // 3
+			32, 13, 40, 15, 4, 21, 43, 29, 53, // 4
+			52, 27, 50, 28, 5, 24, 44, 23, 46 // 5
+	};
 
 	private ListProperty<Colour> facets = new SimpleListProperty<>(FXCollections.observableArrayList());
 
@@ -36,6 +43,10 @@ public class ObservableCube {
 		return facets.get(facetNumber);
 	}
 
+	public List<Colour> getColours() {
+		return facets.get();
+	}
+
 	public void setColour(int facetNumber, Colour colour) {
 		facets.set(facetNumber, colour);
 	}
@@ -51,9 +62,12 @@ public class ObservableCube {
 	}
 
 	public void fill() {
-		for (int facetNumber = 0; facetNumber < CubeConstants.NUMBER_OF_FACETS; ++facetNumber) {
-			setColour(FACETS_ORDER[facetNumber],
-					Colour.values()[facetNumber / CubeConstants.NUMBER_OF_FACETS_PER_FACE + 1]);
+		fill(new ArrayList<>(Colour.getAllNonTransparentList()));
+	}
+
+	public void fill(List<Colour> centers) {
+		for (int index = 0; index < CubeConstants.NUMBER_OF_FACETS; ++index) {
+			setColour(FACETS_ORDER[index], centers.get(index / CubeConstants.NUMBER_OF_FACETS_PER_FACE));
 		}
 	}
 
@@ -71,10 +85,6 @@ public class ObservableCube {
 				setColour(permutation[permutation.length - 1], tmp);
 			}
 		}
-	}
-
-	public List<Colour> facetslist() {
-		return facets.get();
 	}
 
 }

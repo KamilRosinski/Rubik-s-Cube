@@ -15,8 +15,8 @@ public class CubicleTest {
 		// then
 		Cubicle cubicle = new Cubicle(colours);
 		// when
-		assertEquals(colours[0], cubicle.getFacet(0));
-		assertEquals(colours[1], cubicle.getFacet(1));
+		assertEquals(colours[0], cubicle.getColour(0));
+		assertEquals(colours[1], cubicle.getColour(1));
 	}
 
 	@Test
