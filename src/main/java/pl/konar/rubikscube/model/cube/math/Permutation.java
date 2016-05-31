@@ -11,8 +11,8 @@ public class Permutation extends Vector<Integer> {
 
 	public void permute(Integer[] cycle) {
 		Integer tmp = get(cycle[0]);
-		for (int index = 0; index < cycle.length; ++index) {
-			set(cycle[index], get(cycle[(index + 1) % cycle.length]));
+		for (ModularInteger index : ModularInteger.getValues(cycle.length)) {
+			set(cycle[index.getValue()], get(cycle[index.add(1).getValue()]));
 		}
 		set(cycle[cycle.length - 1], tmp);
 	}
