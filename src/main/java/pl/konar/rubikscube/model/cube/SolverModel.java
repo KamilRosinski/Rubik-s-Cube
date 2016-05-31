@@ -9,6 +9,10 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import pl.konar.rubikscube.model.colour.Colour;
+import pl.konar.rubikscube.model.cube.exception.CubeNotMappableException;
+import pl.konar.rubikscube.model.cube.exception.CubeNotSolvableException;
+import pl.konar.rubikscube.model.cube.mapper.CubeMapper;
+import pl.konar.rubikscube.model.cube.validator.CubeValidator;
 import pl.konar.rubikscube.model.solver.ThistlethwaiteSolver;
 
 public class SolverModel {
@@ -24,7 +28,7 @@ public class SolverModel {
 	}
 
 	private void checkIfSolvable() {
-		isSolvable.set(true);
+		isSolvable.set(CubeValidator.checkSolvability(cube));
 	}
 
 	private void setNextColour(int facetNumber) {
@@ -38,10 +42,10 @@ public class SolverModel {
 		isSolved.set(false);
 	}
 
-	public List<Move> solve() {
+	public List<Move> solve() throws CubeNotSolvableException, CubeNotMappableException {
 		List<Move> result = new ArrayList<>();
 		result.add(Move.E);
-		result.addAll(ThistlethwaiteSolver.solve(cube));
+		result.addAll(ThistlethwaiteSolver.solve(CubeMapper.map(cube)));
 		return result;
 	}
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.konar.rubikscube.model.colour.Colour;
-import pl.konar.rubikscube.model.cube.exception.NotExistingCubeException;
 
 public class ThistlethwaiteCube {
 
@@ -13,7 +12,7 @@ public class ThistlethwaiteCube {
 	private List<Integer> cornersPermutation = new ArrayList<>();
 	private List<Integer> cornersOrientation = new ArrayList<>();
 
-	public ThistlethwaiteCube(List<Colour> colours) throws NotExistingCubeException {
+	public ThistlethwaiteCube(List<Colour> colours) {
 		ThistlethwaiteCube solvedCube = new ThistlethwaiteCube();
 		generateEdgesPermutation(colours.subList(0, CubeConstants.NUMBER_OF_FACES), solvedCube);
 	}

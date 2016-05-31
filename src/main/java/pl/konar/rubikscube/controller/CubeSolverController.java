@@ -18,6 +18,8 @@ import javafx.scene.layout.GridPane;
 import pl.konar.rubikscube.model.cube.CubeConstants;
 import pl.konar.rubikscube.model.cube.Move;
 import pl.konar.rubikscube.model.cube.SolverModel;
+import pl.konar.rubikscube.model.cube.exception.CubeNotMappableException;
+import pl.konar.rubikscube.model.cube.exception.CubeNotSolvableException;
 
 public class CubeSolverController {
 
@@ -115,9 +117,9 @@ public class CubeSolverController {
 	@FXML
 	private void solveButtonAction() {
 		Task<List<Move>> solverTask = new Task<List<Move>>() {
-
+			
 			@Override
-			protected List<Move> call() throws Exception {
+			protected List<Move> call() throws CubeNotSolvableException, CubeNotMappableException {
 				return model.solve();
 			}
 
@@ -128,6 +130,20 @@ public class CubeSolverController {
 				model.setIsSolvable(false);
 				solutionList.getSelectionModel().select(0);
 				alert.hide();
+			}
+			
+			@Override
+			protected void failed() {
+				alert.hide();
+				Throwable exception = getException();
+				if (exception instanceof CubeNotMappableException) {
+					// TODO: Show error message.
+					System.err.println("Exception while mapping Cube: " + exception.getMessage());
+				}
+				if (exception instanceof CubeNotSolvableException) {
+					// TODO: Show error message.
+					System.err.println("Exception while solving Cube: " + exception.getMessage());
+				}
 			}
 
 		};
