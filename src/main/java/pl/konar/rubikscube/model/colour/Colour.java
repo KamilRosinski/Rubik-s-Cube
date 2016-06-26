@@ -40,7 +40,7 @@ public enum Colour {
 		return result;
 	}
 
-	public static Set<Colour> getAllNonTransparentSet() {
+	public static Set<Colour> getAllNonTransparent() {
 		return new HashSet<>(getAllNonTransparentList());
 	}
 	

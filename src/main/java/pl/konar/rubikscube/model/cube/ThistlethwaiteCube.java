@@ -1,16 +1,20 @@
 package pl.konar.rubikscube.model.cube;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pl.konar.rubikscube.model.colour.Colour;
 
 public class ThistlethwaiteCube {
 
-	private List<Integer> edgesPermutation = new ArrayList<>();
-	private List<Integer> edgesOrientation = new ArrayList<>();
-	private List<Integer> cornersPermutation = new ArrayList<>();
-	private List<Integer> cornersOrientation = new ArrayList<>();
+//	private List<Integer> edgesPermutation = new ArrayList<>();
+//	private List<Integer> edgesOrientation = new ArrayList<>();
+//	private List<Integer> cornersPermutation = new ArrayList<>();
+//	private List<Integer> cornersOrientation = new ArrayList<>();
+
+	private int[] edgesPermutation = new int[CubeConstants.NUMBER_OF_EDGES];
+	private int[] edgesOrientation = new int[CubeConstants.NUMBER_OF_EDGES];
+	private int[] cornersPermutation = new int[CubeConstants.NUMBER_OF_CORNERS];
+	private int[] cornersOrientation = new int[CubeConstants.NUMBER_OF_CORNERS];
 
 	public ThistlethwaiteCube(List<Colour> colours) {
 		ThistlethwaiteCube solvedCube = new ThistlethwaiteCube();
@@ -21,29 +25,30 @@ public class ThistlethwaiteCube {
 	}
 
 	public ThistlethwaiteCube() {
-		for (int edge = 0; edge < CubeConstants.NUMBER_OF_EDGES; ++edge) {
-			edgesOrientation.add(0);
-			edgesPermutation.add(edge);
-		}
-		for (int corner = 0; corner < CubeConstants.NUMBER_OF_CORNERS; ++corner) {
-			cornersOrientation.add(0);
-			cornersPermutation.add(corner);
-		}
+		
+//		for (int edge = 0; edge < CubeConstants.NUMBER_OF_EDGES; ++edge) {
+//			edgesOrientation[edge] = 0;
+//			edgesPermutation[edge] = edge;
+//		}
+//		for (int corner = 0; corner < CubeConstants.NUMBER_OF_CORNERS; ++corner) {
+//			cornersOrientation[corner] = 0;
+//			cornersPermutation[corner] = corner;
+//		}
 	}
 
-	public List<Integer> getEdgesPermutation() {
+	public int[] getEdgesPermutation() {
 		return edgesPermutation;
 	}
 
-	public List<Integer> getCornersPermutation() {
+	public int[] getCornersPermutation() {
 		return cornersPermutation;
 	}
 
-	public List<Integer> getEdgesOrientation() {
+	public int[] getEdgesOrientation() {
 		return edgesOrientation;
 	}
 
-	public List<Integer> getCornersOrientation() {
+	public int[] getCornersOrientation() {
 		return cornersOrientation;
 	}
 

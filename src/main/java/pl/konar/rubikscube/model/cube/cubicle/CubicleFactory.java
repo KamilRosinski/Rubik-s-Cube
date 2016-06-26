@@ -12,7 +12,7 @@ public class CubicleFactory {
 	private static final int EDGES_END_INDEX = 2 * CubeConstants.NUMBER_OF_EDGES + CENTERS_END_INDEX;
 	private static final int CORNERS_END_INDEX = 3 * CubeConstants.NUMBER_OF_CORNERS + EDGES_END_INDEX;
 
-	public static List<Cubicle> centerCubicles(List<Colour> facets) {
+	public static List<Cubicle> extractCenterCubicles(List<Colour> facets) {
 		List<Cubicle> result = new ArrayList<>();
 		for (int index = 0; index < CENTERS_END_INDEX; index += 1) {
 			result.add(new Cubicle(facets.get(index)));
@@ -20,7 +20,7 @@ public class CubicleFactory {
 		return result;
 	}
 
-	public static List<Cubicle> edgeCubicles(List<Colour> facets) {
+	public static List<Cubicle> extractEdgeCubicles(List<Colour> facets) {
 		List<Cubicle> result = new ArrayList<>();
 		for (int index = CENTERS_END_INDEX; index < EDGES_END_INDEX; index += 2) {
 			result.add(new Cubicle(facets.get(index), facets.get(index + 1)));
@@ -28,7 +28,7 @@ public class CubicleFactory {
 		return result;
 	}
 
-	public static List<Cubicle> cornerCubicles(List<Colour> facets) {
+	public static List<Cubicle> extractCornerCubicles(List<Colour> facets) {
 		List<Cubicle> result = new ArrayList<>();
 		for (int index = EDGES_END_INDEX; index < CORNERS_END_INDEX; index += 3) {
 			result.add(new Cubicle(facets.get(index), facets.get(index + 1), facets.get(index + 2)));

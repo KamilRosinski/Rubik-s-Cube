@@ -8,23 +8,24 @@ import java.util.List;
 
 import org.junit.Test;
 
-public class PermutationTest {
+public class PermutationVectorTest {
 
 	@Test
-	public void shouldInitializePermutation() {
+	public void shouldInitializePermutationVcetor() {
 		// given
 		int initialSize = 5;
 		Integer index = 3;
 		// when
-		Permutation permutation = new Permutation(initialSize);
+		PermutationVector permutation = new PermutationVector(initialSize);
 		// then
+		assertEquals(initialSize, permutation.size());
 		assertEquals(index, permutation.get(index));
 	}
 
 	@Test
-	public void shouldPermuteElements() {
+	public void shouldPermuteTwoElements() {
 		// given
-		Permutation permutation = new Permutation(4);
+		PermutationVector permutation = new PermutationVector(4);
 		Integer[] cycle = { 0, 2 };
 		// when
 		permutation.permute(cycle);

@@ -23,7 +23,7 @@ import pl.konar.rubikscube.model.cube.exception.CubeNotSolvableException;
 
 public class CubeSolverController {
 
-	private static final double BUTTON_SIZE = 40;
+//	private static final double BUTTON_SIZE = 40;
 	private static final int[] FACE_X_OFFSETS = { 4, 12, 8, 4, 0, 4 };
 	private static final int[] FACE_Y_OFFSETS = { 0, 4, 4, 4, 4, 8 };
 
@@ -72,7 +72,7 @@ public class CubeSolverController {
 	}
 
 	private void initializeFacetButton(Button button, int wall, int row, int column) {
-		button.setPrefSize(BUTTON_SIZE, BUTTON_SIZE);
+//		button.setPrefSize(BUTTON_SIZE, BUTTON_SIZE);
 		int facetNumber = model.getCubeNthFacetNumber(CubeConstants.NUMBER_OF_FACETS_PER_FACE * wall
 				+ CubeConstants.NUMBER_OF_COLUMNS_PER_FACE * row + column);
 		button.setOnAction(event -> {
@@ -119,7 +119,7 @@ public class CubeSolverController {
 		Task<List<Move>> solverTask = new Task<List<Move>>() {
 
 			@Override
-			protected List<Move> call() throws CubeNotSolvableException, CubeNotMappableException {
+			protected List<Move> call() {
 				return model.solve();
 			}
 

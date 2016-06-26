@@ -9,7 +9,7 @@ import pl.konar.rubikscube.model.colour.Colour;
 public class CubicleTest {
 
 	@Test
-	public void shouldFillCubicle() {
+	public void shouldCreateCubicle() {
 		// given
 		Colour[] colours = { Colour.ORANGE, Colour.BLUE };
 		// then
@@ -20,7 +20,7 @@ public class CubicleTest {
 	}
 
 	@Test
-	public void shouldCompareTwoCubicles() {
+	public void shouldCompareTwoEqualCubicles() {
 		// given
 		Colour[] colours1 = {Colour.GREEN, Colour.ORANGE, Colour.WHITE};
 		Cubicle cubicle1 = new Cubicle(colours1);
@@ -33,7 +33,33 @@ public class CubicleTest {
 		}
 	
 	@Test
-	public void shouldCheckRelativeTwist() {
+	public void shouldCompareTwoUnequalCubicles() {
+		// given
+		Colour[] colours1 = {Colour.GREEN, Colour.ORANGE, Colour.WHITE};
+		Cubicle cubicle1 = new Cubicle(colours1);
+		Colour[] colours2 = {Colour.WHITE, Colour.RED, Colour.ORANGE};
+		Cubicle cubicle2 = new Cubicle(colours2);
+		// then
+		boolean result = cubicle1.equals(cubicle2);
+		// when
+		assertFalse(result);
+	}
+	
+	@Test
+	public void shouldCompareTwoCubiclesOfDifferentSize() {
+		// given
+		Colour[] colours1 = {Colour.GREEN, Colour.ORANGE, Colour.WHITE};
+		Cubicle cubicle1 = new Cubicle(colours1);
+		Colour[] colours2 = {Colour.WHITE, Colour.RED};
+		Cubicle cubicle2 = new Cubicle(colours2);
+		// then
+		boolean result = cubicle1.equals(cubicle2);
+		// when
+		assertFalse(result);
+	}
+	
+	@Test
+	public void shouldCheckRelativeTwistOfEqualCubicles() {
 		// given
 		Colour[] colours1 = {Colour.GREEN, Colour.ORANGE, Colour.WHITE};
 		Cubicle cubicle1 = new Cubicle(colours1);
@@ -43,6 +69,19 @@ public class CubicleTest {
 		int result = cubicle1.relativeTwist(cubicle2);
 		// when
 		assertEquals(1, result);
+	}
+	
+	@Test
+	public void shouldCheckRelativeTwistOfUnequalCubicles() {
+		// given
+		Colour[] colours1 = {Colour.GREEN, Colour.ORANGE, Colour.WHITE};
+		Cubicle cubicle1 = new Cubicle(colours1);
+		Colour[] colours2 = {Colour.WHITE, Colour.GREEN};
+		Cubicle cubicle2 = new Cubicle(colours2);
+		// then
+		int result = cubicle1.relativeTwist(cubicle2);
+		// when
+		assertEquals(-1, result);
 	}
 	
 }
