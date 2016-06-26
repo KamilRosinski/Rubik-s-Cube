@@ -1,4 +1,4 @@
-package pl.konar.rubikscube.model.cube.math;
+package pl.konar.rubikscube.model.cube.math.test;
 
 public enum PermutationParity {
 

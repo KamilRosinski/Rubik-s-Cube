@@ -1,9 +1,12 @@
-package pl.konar.rubikscube.model.cube.math;
+package pl.konar.rubikscube.model.cube.math.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
+
+import pl.konar.rubikscube.model.cube.math.ModularInteger;
+import pl.konar.rubikscube.model.cube.math.OrientationVector;
 
 public class OrientationVectorTest {
 

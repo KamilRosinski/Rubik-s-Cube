@@ -1,8 +1,10 @@
-package pl.konar.rubikscube.model.cube;
+package pl.konar.rubikscube.model.cube.test;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import pl.konar.rubikscube.model.cube.Move;
 
 public class MoveTest {
 

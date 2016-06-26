@@ -1,10 +1,11 @@
-package pl.konar.rubikscube.model.cube.cubicle;
+package pl.konar.rubikscube.model.cube.cubicle.test;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import pl.konar.rubikscube.model.colour.Colour;
+import pl.konar.rubikscube.model.cube.cubicle.Cubicle;
 
 public class CubicleTest {
 

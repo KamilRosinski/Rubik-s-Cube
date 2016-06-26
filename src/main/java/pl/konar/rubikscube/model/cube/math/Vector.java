@@ -12,6 +12,15 @@ public class Vector<T> implements Iterable<T> {
 		values = (T[]) new Object[size];
 	}
 
+	@SuppressWarnings("unchecked")
+	public Vector(T... values) {
+		this(values.length);
+		for (int index = 0; index < size(); ++index) {
+			this.values[index] = values[index];
+		}
+	}
+
+	
 	public int size() {
 		return values.length;
 	}
