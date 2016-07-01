@@ -1,12 +1,14 @@
 package pl.konar.rubikscube.model.cube;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import pl.konar.rubikscube.model.colour.Colour;
+import pl.konar.rubikscube.model.cube.exception.WrongNumberOfFacetsException;
 
 public class ObservableCube {
 
@@ -18,6 +20,7 @@ public class ObservableCube {
 			{ { 31, 41, 37, 35 }, { 12, 11, 8, 7 }, { 32, 39, 38, 33 }, { 13, 10, 9, 6 }, { 40, 36, 34, 30 } }, // U
 			{ { 52, 43, 46, 50 }, { 28, 23, 24, 27 }, { 53, 42, 47, 48 }, { 29, 22, 25, 26 }, { 44, 45, 49, 51 } } // D
 	};
+
 	private static final int[] FACETS_ORDER = { //
 			31, 7, 35, 12, 0, 8, 41, 11, 37, // 0
 			33, 6, 30, 16, 1, 14, 45, 22, 42, // 1
@@ -30,9 +33,15 @@ public class ObservableCube {
 	private ListProperty<Colour> facets = new SimpleListProperty<>(FXCollections.observableArrayList());
 
 	public ObservableCube() {
-		for (int i = 0; i < CubeConstants.NUMBER_OF_FACETS; ++i) {
-			facets.add(Colour.TRANSPARENT);
+		reset();
+	}
+
+	public ObservableCube(List<Colour> colours) {
+		if (colours.size() != CubeConstants.NUMBER_OF_FACETS) {
+			throw new WrongNumberOfFacetsException(
+					"Cube must have " + CubeConstants.NUMBER_OF_FACETS + " facets, has " + colours.size() + ".");
 		}
+		facets.addAll(colours);
 	}
 
 	public ListProperty<Colour> facetsProperty() {
@@ -56,13 +65,11 @@ public class ObservableCube {
 	}
 
 	public void reset() {
-		for (int i = 0; i < CubeConstants.NUMBER_OF_FACETS; ++i) {
-			setColour(i, Colour.TRANSPARENT);
-		}
+		facets.setAll(Collections.nCopies(CubeConstants.NUMBER_OF_FACETS, Colour.TRANSPARENT));
 	}
 
 	public void fill() {
-		fill(new ArrayList<>(Colour.getAllNonTransparentList()));
+		fill(Colour.getAllNonTransparentList());
 	}
 
 	public void fill(List<Colour> centers) {
@@ -85,6 +92,10 @@ public class ObservableCube {
 				setColour(permutation[permutation.length - 1], tmp);
 			}
 		}
+	}
+
+	public List<Colour> getCenterColours() {
+		return new ArrayList<>(facets.subList(0, CubeConstants.NUMBER_OF_FACES));
 	}
 
 }

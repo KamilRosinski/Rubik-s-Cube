@@ -1,17 +1,43 @@
 package pl.konar.rubikscube.model.cube.mapper;
 
+import java.util.List;
+
 import pl.konar.rubikscube.model.cube.ObservableCube;
 import pl.konar.rubikscube.model.cube.ThistlethwaiteCube;
-import pl.konar.rubikscube.model.cube.builder.ThistlethwaiteCubeBuilder;
+import pl.konar.rubikscube.model.cube.cubicle.Cubicle;
+import pl.konar.rubikscube.model.cube.cubicle.CubicleFactory;
 
 public class CubeMapper {
 
-	// private static List<Cubicle> expectedCentersColours =
-	// Colour.getAllNonTransparent().stream()
-	// .map(colour -> new Cubicle(colour)).collect(Collectors.toList());
+	public static boolean isMappable(ObservableCube cube) {
+		ObservableCube solved = new ObservableCube();
+		solved.fill(cube.getCenterColours());
+		return checkCenterCubicles(solved, cube) && checkEdgeCubicles(solved, cube) && checkCornerCubicles(solved, cube);
+	}
 
-	private static ObservableCube solvedCube = CubeMapper.map(ThistlethwaiteCubeBuilder.buildSolvedCube());
+	private static boolean checkCenterCubicles(ObservableCube solved, ObservableCube cube) {
+		List<Cubicle> cubeCenters = CubicleFactory.extractCenterCubicles(solved);
+		List<Cubicle> solvedCenters = CubicleFactory.extractCenterCubicles(cube);
+		return compareCubicleLists(cubeCenters, solvedCenters);
+	}
 
+	private static boolean checkEdgeCubicles(ObservableCube solved, ObservableCube cube) {
+		List<Cubicle> cubeEdges = CubicleFactory.extractEdgeCubicles(solved);
+		List<Cubicle> solvedEdges = CubicleFactory.extractEdgeCubicles(cube);
+		return compareCubicleLists(cubeEdges, solvedEdges);
+	}
+	
+	private static boolean checkCornerCubicles(ObservableCube solved, ObservableCube cube) {
+		List<Cubicle> cubeCorners = CubicleFactory.extractCornerCubicles(solved);
+		List<Cubicle> solvedCorners = CubicleFactory.extractCornerCubicles(cube);
+		return compareCubicleLists(cubeCorners, solvedCorners);
+	}
+	
+	private static boolean compareCubicleLists(List<Cubicle> first, List<Cubicle> second) {
+		return first != null && second != null && first.size() == second.size() && first.containsAll(second)
+				&& second.containsAll(first);
+	}
+	
 	public static ObservableCube map(ThistlethwaiteCube cube) {
 		// TODO: Cube mapping
 		return null;
@@ -20,35 +46,6 @@ public class CubeMapper {
 	public static ThistlethwaiteCube map(ObservableCube cube) {
 		// TODO: Cube mapping
 		return null;
-	}
-
-	public static boolean isMappable(ObservableCube cube) {
-		return checkCenterCubicles(cube) && checkEdgeCubicles(cube) && checkCornerCubicles(cube);
-	}
-
-	private static boolean checkEdgeCubicles(ObservableCube cube) {
-		// ObservableCube cube = new ObservableCube();
-		// cube.fill(CubicleFactory.extractCenterCubicles(facets).stream().map(cubicle
-		// -> cubicle.getColour(0))
-		// .collect(Collectors.toList()));
-		// List<Cubicle> solvedEdges =
-		// CubicleFactory.extractEdgeCubicles(cube.getColours());
-		// List<Cubicle> edges = CubicleFactory.extractEdgeCubicles(facets);
-		// System.out.println(cube.getColours());
-		// System.out.println(facets);
-		// return edges.containsAll(solvedEdges) &&
-		// solvedEdges.containsAll(edges);
-		return false;
-	}
-
-	private static boolean checkCenterCubicles(ObservableCube cube) {
-		// return centers.containsAll(expectedCenters) &&
-		// expectedCenters.containsAll(centers);
-		return false;
-	}
-
-	private static boolean checkCornerCubicles(ObservableCube cube) {
-		return false;
 	}
 
 }

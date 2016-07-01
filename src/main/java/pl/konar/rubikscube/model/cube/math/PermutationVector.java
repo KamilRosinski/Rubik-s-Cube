@@ -1,7 +1,5 @@
 package pl.konar.rubikscube.model.cube.math;
 
-import pl.konar.rubikscube.model.cube.math.test.PermutationParity;
-
 public class PermutationVector extends Vector<Integer> {
 
 	public PermutationVector(int size) {

@@ -50,7 +50,8 @@ public class Cubicle {
 			if (other.facets != null) {
 				return false;
 			}
-		} else if (!(facets.containsAll(other.facets) && other.facets.containsAll(facets))) {
+		} else if (!(facets.size() == other.facets.size() && facets.containsAll(other.facets)
+				&& other.facets.containsAll(facets))) {
 			return false;
 		}
 		return true;
