@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import pl.konar.rubikscube.model.cube.math.ModularInteger;
 import pl.konar.rubikscube.model.cube.math.OrientationVector;
 
 public class OrientationVectorTest {
@@ -17,7 +16,7 @@ public class OrientationVectorTest {
 		int base = 3;
 		// when
 		OrientationVector orientation = new OrientationVector(size, base);
-		ModularInteger expected = new ModularInteger(0, base);
+		Integer expected = 0;
 		// then
 		assertNotNull(orientation);
 		assertEquals(size, orientation.size());
@@ -33,9 +32,10 @@ public class OrientationVectorTest {
 		// when
 		OrientationVector orientation = new OrientationVector(size, base);
 		orientation.increaseElementBy(0, 4);
+		Integer expected = 1;
 		// then
 		assertNotNull(orientation);
-		assertEquals(new ModularInteger(1, base), orientation.get(0));
+		assertEquals(expected , orientation.get(0));
 	}
 
 }

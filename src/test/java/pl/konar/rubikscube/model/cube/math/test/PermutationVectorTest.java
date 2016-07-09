@@ -1,6 +1,8 @@
 package pl.konar.rubikscube.model.cube.math.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +11,7 @@ import java.util.List;
 import org.junit.Test;
 
 import pl.konar.rubikscube.model.cube.math.PermutationVector;
+import pl.konar.rubikscube.model.cube.math.exception.IllegalPermutationVectorException;
 
 public class PermutationVectorTest {
 
@@ -22,6 +25,36 @@ public class PermutationVectorTest {
 		// then
 		assertEquals(initialSize, permutation.size());
 		assertEquals(index, permutation.get(index));
+	}
+
+	@Test
+	public void shouldInitializePermutationFromArray() {
+		// given
+		int[] elements = { 0, 2, 3, 4, 1 };
+		// when
+		PermutationVector permutation = new PermutationVector(elements);
+		// then
+		assertNotNull(permutation);
+	}
+
+	@Test(expected = IllegalPermutationVectorException.class)
+	public void shouldThrowExceptionOnWrongElementValue() {
+		// given
+		int[] elements = { 0, 5, 3, 4, 1 };
+		// when
+		new PermutationVector(elements);
+		// then
+		fail("No exception thrown.");
+	}
+
+	@Test(expected = IllegalPermutationVectorException.class)
+	public void shouldThrowExceptionOnNonUniqueElement() {
+		// given
+		int[] elements = { 0, 2, 2, 4, 1 };
+		// when
+		new PermutationVector(elements);
+		// then
+		fail("No exception thrown.");
 	}
 
 	@Test

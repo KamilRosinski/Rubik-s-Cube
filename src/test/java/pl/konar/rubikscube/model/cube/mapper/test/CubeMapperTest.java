@@ -1,9 +1,9 @@
 package pl.konar.rubikscube.model.cube.mapper.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,8 @@ import org.junit.Test;
 
 import pl.konar.rubikscube.model.colour.Colour;
 import pl.konar.rubikscube.model.cube.ObservableCube;
+import pl.konar.rubikscube.model.cube.ThistlethwaiteCube;
+import pl.konar.rubikscube.model.cube.builder.ThistlethwaiteCubeBuilder;
 import pl.konar.rubikscube.model.cube.mapper.CubeMapper;
 import pl.konar.rubikscube.model.cube.test.ObservableCubeTest;
 
@@ -72,8 +74,39 @@ public class CubeMapperTest {
 	}
 
 	@Test
-	public void ShouldMapCube() {
-		fail("Not yet implamented.");
+	public void ShouldMapScrambledCubeToThistlethwaite() {
+		// given
+		ObservableCube observableCube = new ObservableCube(ObservableCubeTest.scrambledColours);
+		// when
+		ThistlethwaiteCube thistlethwaiteCube = CubeMapper.map(observableCube);
+		// then
+		assertNotNull(thistlethwaiteCube);
 	}
-	
+
+	@Test
+	public void ShouldMapSolvedCubeToThistlethwaite() {
+		// given
+		ObservableCube solvedCube = new ObservableCube();
+		solvedCube.fill(Colour.getAllNonTransparentList());
+		// when
+		ThistlethwaiteCube thistlethwaiteCube = CubeMapper.map(solvedCube);
+		ThistlethwaiteCube expected = ThistlethwaiteCubeBuilder.buildSolvedCube();
+		// then
+		assertNotNull(thistlethwaiteCube);
+		assertEquals(expected, thistlethwaiteCube);
+	}
+
+	@Test
+	public void ShouldMapSolvedCubeToObservable() {
+		// given
+		ThistlethwaiteCube thistlethwaiteCube = ThistlethwaiteCubeBuilder.buildSolvedCube();
+		ObservableCube expected = new ObservableCube();
+		expected.fill(Colour.getAllNonTransparentList());
+		// when
+		ObservableCube observableCube = CubeMapper.map(thistlethwaiteCube, expected.getCenterColours());
+		// then
+		assertNotNull(observableCube);
+		assertEquals(expected.getColours(), observableCube.getColours());
+	}
+
 }

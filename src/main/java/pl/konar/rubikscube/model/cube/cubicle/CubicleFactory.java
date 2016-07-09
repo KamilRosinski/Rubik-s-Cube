@@ -12,14 +12,6 @@ public class CubicleFactory {
 	private static final int EDGES_END_INDEX = 2 * CubeConstants.NUMBER_OF_EDGES + CENTERS_END_INDEX;
 	private static final int CORNERS_END_INDEX = 3 * CubeConstants.NUMBER_OF_CORNERS + EDGES_END_INDEX;
 
-//	public static List<Cubicle> extractCubicles(ObservableCube cube) {
-//		List<Cubicle> result = new ArrayList<>();
-//		result.addAll(extractCenterCubicles(cube));
-//		result.addAll(extractEdgeCubicles(cube));
-//		result.addAll(extractCornerCubicles(cube));
-//		return result;
-//	}
-	
 	public static List<Cubicle> extractCenterCubicles(ObservableCube cube) {
 		List<Cubicle> result = new ArrayList<>();
 		for (int index = 0; index < CENTERS_END_INDEX; index += 1) {

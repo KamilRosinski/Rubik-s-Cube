@@ -1,55 +1,114 @@
 package pl.konar.rubikscube.model.cube;
 
-import java.util.List;
-
-import pl.konar.rubikscube.model.colour.Colour;
+import pl.konar.rubikscube.model.cube.exception.IllegalCubeException;
+import pl.konar.rubikscube.model.cube.math.OrientationVector;
+import pl.konar.rubikscube.model.cube.math.PermutationVector;
 
 public class ThistlethwaiteCube {
 
-//	private List<Integer> edgesPermutation = new ArrayList<>();
-//	private List<Integer> edgesOrientation = new ArrayList<>();
-//	private List<Integer> cornersPermutation = new ArrayList<>();
-//	private List<Integer> cornersOrientation = new ArrayList<>();
+	private PermutationVector cornersPermutation;
+	private OrientationVector cornersOrientation;
+	private PermutationVector edgesPermutation;
+	private OrientationVector edgesOrientation;
 
-	private int[] edgesPermutation = new int[CubeConstants.NUMBER_OF_EDGES];
-	private int[] edgesOrientation = new int[CubeConstants.NUMBER_OF_EDGES];
-	private int[] cornersPermutation = new int[CubeConstants.NUMBER_OF_CORNERS];
-	private int[] cornersOrientation = new int[CubeConstants.NUMBER_OF_CORNERS];
-
-	public ThistlethwaiteCube(List<Colour> colours) {
-		ThistlethwaiteCube solvedCube = new ThistlethwaiteCube();
-		generateEdgesPermutation(colours.subList(0, CubeConstants.NUMBER_OF_FACES), solvedCube);
+	public ThistlethwaiteCube(PermutationVector cornersPermutation, OrientationVector cornersOrientation,
+			PermutationVector edgesPermutation, OrientationVector edgesOrientation) {
+		if (cornersPermutation != null && cornersPermutation.size() != CubeConstants.NUMBER_OF_CORNERS) {
+			throw new IllegalCubeException("Cube must have " + CubeConstants.NUMBER_OF_CORNERS + " corners.");
+		}
+		this.cornersPermutation = cornersPermutation;
+		if (cornersOrientation != null && cornersOrientation.size() != CubeConstants.NUMBER_OF_CORNERS) {
+			throw new IllegalCubeException("Cube must have " + CubeConstants.NUMBER_OF_CORNERS + " corners.");
+		}
+		this.cornersOrientation = cornersOrientation;
+		if (edgesPermutation != null && edgesPermutation.size() != CubeConstants.NUMBER_OF_EDGES) {
+			throw new IllegalCubeException("Cube must have " + CubeConstants.NUMBER_OF_EDGES + " edges.");
+		}
+		this.edgesPermutation = edgesPermutation;
+		if (edgesOrientation != null && edgesOrientation.size() != CubeConstants.NUMBER_OF_EDGES) {
+			throw new IllegalCubeException("Cube must have " + CubeConstants.NUMBER_OF_EDGES + " edges.");
+		}
+		this.edgesOrientation = edgesOrientation;
 	}
 
-	private void generateEdgesPermutation(List<Colour> colours, ThistlethwaiteCube solvedCube) {
-	}
-
-	public ThistlethwaiteCube() {
-		
-//		for (int edge = 0; edge < CubeConstants.NUMBER_OF_EDGES; ++edge) {
-//			edgesOrientation[edge] = 0;
-//			edgesPermutation[edge] = edge;
-//		}
-//		for (int corner = 0; corner < CubeConstants.NUMBER_OF_CORNERS; ++corner) {
-//			cornersOrientation[corner] = 0;
-//			cornersPermutation[corner] = corner;
-//		}
-	}
-
-	public int[] getEdgesPermutation() {
+	public PermutationVector getEdgesPermutation() {
 		return edgesPermutation;
 	}
 
-	public int[] getCornersPermutation() {
+	public PermutationVector getCornersPermutation() {
 		return cornersPermutation;
 	}
 
-	public int[] getEdgesOrientation() {
+	public OrientationVector getEdgesOrientation() {
 		return edgesOrientation;
 	}
 
-	public int[] getCornersOrientation() {
+	public OrientationVector getCornersOrientation() {
 		return cornersOrientation;
 	}
 
+	public ThistlethwaiteCube ApplyMove(Move move) {
+		// TODO: move
+		return null;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cornersOrientation == null) ? 0 : cornersOrientation.hashCode());
+		result = prime * result + ((cornersPermutation == null) ? 0 : cornersPermutation.hashCode());
+		result = prime * result + ((edgesOrientation == null) ? 0 : edgesOrientation.hashCode());
+		result = prime * result + ((edgesPermutation == null) ? 0 : edgesPermutation.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		ThistlethwaiteCube other = (ThistlethwaiteCube) obj;
+		if (cornersOrientation == null) {
+			if (other.cornersOrientation != null) {
+				return false;
+			}
+		} else if (!cornersOrientation.equals(other.cornersOrientation)) {
+			return false;
+		}
+		if (cornersPermutation == null) {
+			if (other.cornersPermutation != null) {
+				return false;
+			}
+		} else if (!cornersPermutation.equals(other.cornersPermutation)) {
+			return false;
+		}
+		if (edgesOrientation == null) {
+			if (other.edgesOrientation != null) {
+				return false;
+			}
+		} else if (!edgesOrientation.equals(other.edgesOrientation)) {
+			return false;
+		}
+		if (edgesPermutation == null) {
+			if (other.edgesPermutation != null) {
+				return false;
+			}
+		} else if (!edgesPermutation.equals(other.edgesPermutation)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return cornersPermutation + "\n" + cornersOrientation + "\n" + edgesPermutation + "\n" + edgesOrientation;
+	}
+	
 }

@@ -1,5 +1,6 @@
 package pl.konar.rubikscube.model.cube.cubicle;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,6 +14,10 @@ public class Cubicle {
 		facets = Arrays.asList(colours);
 	}
 
+	private Cubicle(List<Colour> colours) {
+		facets = new ArrayList<>(colours);
+	}
+
 	public List<Colour> getColours() {
 		return facets;
 	}
@@ -23,6 +28,14 @@ public class Cubicle {
 
 	public int relativeTwist(Cubicle cubicle) {
 		return (equals(cubicle) && !facets.isEmpty()) ? cubicle.getColours().indexOf(facets.get(0)) : -1;
+	}
+
+	public Cubicle twist(int angle) {
+		List<Colour> colours = new ArrayList<>();
+		angle = angle % facets.size();
+		colours.addAll(facets.subList(angle, facets.size()));
+		colours.addAll(facets.subList(0, angle));
+		return new Cubicle(colours);
 	}
 
 	@Override
