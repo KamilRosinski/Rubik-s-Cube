@@ -58,7 +58,7 @@ public class CubeMapper {
 			invCornersPerm[cornersPermutation[i]] = i;
 		}
 		for (int i = 0; i < 8; ++i) {
-			cornersOrientation[invCornersPerm[i]] = cubeCorners.get(cornersPermutation[i])
+			cornersOrientation[/*invCornersPerm*/cornersPermutation[i]] = cubeCorners.get(cornersPermutation[i])
 					.relativeTwist(solvedCorners.get(i));
 		}
 
@@ -73,7 +73,7 @@ public class CubeMapper {
 			invEdgesPerm[edgesPermutation[i]] = i;
 		}
 		for (int i = 0; i < 12; ++i) {
-			edgesOrientation[invEdgesPerm[i]] = cubeEdges.get(edgesPermutation[i]).relativeTwist(solvedEdges.get(i));
+			edgesOrientation[/*invEdgesPerm*/edgesPermutation[i]] = cubeEdges.get(edgesPermutation[i]).relativeTwist(solvedEdges.get(i));
 		}
 
 		return new ThistlethwaiteCube(new PermutationVector(cornersPermutation),
@@ -89,8 +89,23 @@ public class CubeMapper {
 		colours.addAll(solved.getCenterColours());
 		List<Cubicle> solvedEdges = CubicleFactory.extractEdgeCubicles(solved);
 		List<Cubicle> solvedCorners = CubicleFactory.extractCornerCubicles(solved);
-		for (int i : cube.getEdgesPermutation()) {
-			
+		Cubicle[] edges = new Cubicle[12];
+		for (int index = 0; index < 12; ++index) {
+			Integer position = cube.getEdgesPermutation().get(index);
+			Integer angle = cube.getEdgesOrientation().get(position);
+			edges[position] = solvedEdges.get(index).twist(angle);
+		}
+		for (int index = 0; index < 12; ++index) {
+			colours.addAll(edges[index].getColours());
+		}
+		Cubicle[] corners = new Cubicle[8];
+		for (int index = 0; index < 8; ++index) {
+			Integer position = cube.getCornersPermutation().get(index);
+			Integer angle = cube.getCornersOrientation().get(position);
+			corners[position] = solvedCorners.get(index).twist(angle);
+		}
+		for (Cubicle cubicle : corners) {
+			colours.addAll(cubicle.getColours());
 		}
 		return new ObservableCube(colours);
 	}

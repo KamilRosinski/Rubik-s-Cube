@@ -17,7 +17,7 @@ import pl.konar.rubikscube.model.cube.exception.WrongNumberOfFacetsException;
 
 public class ObservableCubeTest {
 
-	public static List<Colour> scrambledColours = Arrays.asList(Colour.WHITE, Colour.GREEN, Colour.ORANGE, Colour.BLUE,
+	public static final List<Colour> SCRAMBLED_COLOURS = Arrays.asList(Colour.WHITE, Colour.GREEN, Colour.ORANGE, Colour.BLUE,
 			Colour.RED, Colour.YELLOW, Colour.ORANGE, Colour.BLUE, Colour.ORANGE, Colour.WHITE, Colour.YELLOW,
 			Colour.ORANGE, Colour.RED, Colour.WHITE, Colour.YELLOW, Colour.BLUE, Colour.BLUE, Colour.RED, Colour.WHITE,
 			Colour.BLUE, Colour.GREEN, Colour.ORANGE, Colour.WHITE, Colour.GREEN, Colour.YELLOW, Colour.GREEN,
@@ -41,10 +41,10 @@ public class ObservableCubeTest {
 	public void ShouldCreateCubeFromListOfColours() {
 		// given
 		// when
-		ObservableCube cube = new ObservableCube(scrambledColours);
+		ObservableCube cube = new ObservableCube(SCRAMBLED_COLOURS);
 		// then
 		assertNotNull(cube);
-		assertEquals(scrambledColours, cube.getColours());
+		assertEquals(SCRAMBLED_COLOURS, cube.getColours());
 	}
 
 	@Test(expected = WrongNumberOfFacetsException.class)
@@ -60,7 +60,7 @@ public class ObservableCubeTest {
 	@Test
 	public void ShouldGetCenterColours() {
 		// given
-		ObservableCube cube = new ObservableCube(scrambledColours);
+		ObservableCube cube = new ObservableCube(SCRAMBLED_COLOURS);
 		// when
 		List<Colour> expected = Arrays.asList(Colour.WHITE, Colour.GREEN, Colour.ORANGE, Colour.BLUE, Colour.RED,
 				Colour.YELLOW);

@@ -15,7 +15,6 @@ public class ThistlethwaiteCubeTest {
 		// when
 		ThistlethwaiteCube cube = ThistlethwaiteCubeBuilder.buildSolvedCube();
 		// then
-		System.err.println(cube);
 		assertNotNull(cube);
 	}
 

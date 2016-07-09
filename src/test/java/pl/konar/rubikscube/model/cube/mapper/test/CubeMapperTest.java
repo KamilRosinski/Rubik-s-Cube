@@ -12,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import pl.konar.rubikscube.model.colour.Colour;
+import pl.konar.rubikscube.model.cube.Move;
 import pl.konar.rubikscube.model.cube.ObservableCube;
 import pl.konar.rubikscube.model.cube.ThistlethwaiteCube;
 import pl.konar.rubikscube.model.cube.builder.ThistlethwaiteCubeBuilder;
@@ -30,7 +31,7 @@ public class CubeMapperTest {
 	@Test
 	public void ShouldDetectMappableCube() {
 		// given
-		ObservableCube cube = new ObservableCube(ObservableCubeTest.scrambledColours);
+		ObservableCube cube = new ObservableCube(ObservableCubeTest.SCRAMBLED_COLOURS);
 		// when
 		// then
 		assertNotNull(cube);
@@ -40,7 +41,7 @@ public class CubeMapperTest {
 	@Test
 	public void ShouldDetectNotMappableCubeWithWrongCenters() {
 		// given
-		List<Colour> colours = new ArrayList<>(ObservableCubeTest.scrambledColours);
+		List<Colour> colours = new ArrayList<>(ObservableCubeTest.SCRAMBLED_COLOURS);
 		colours.set(1, Colour.YELLOW);
 		// when
 		ObservableCube cube = new ObservableCube(colours);
@@ -52,7 +53,7 @@ public class CubeMapperTest {
 	@Test
 	public void ShouldDetectNotMappableCubeWithWrongEdges() {
 		// given
-		List<Colour> colours = new ArrayList<>(ObservableCubeTest.scrambledColours);
+		List<Colour> colours = new ArrayList<>(ObservableCubeTest.SCRAMBLED_COLOURS);
 		colours.set(10, Colour.RED);
 		// when
 		ObservableCube cube = new ObservableCube(colours);
@@ -64,7 +65,7 @@ public class CubeMapperTest {
 	@Test
 	public void ShouldDetectNotMappableCubeWithWrongCorners() {
 		// given
-		List<Colour> colours = new ArrayList<>(ObservableCubeTest.scrambledColours);
+		List<Colour> colours = new ArrayList<>(ObservableCubeTest.SCRAMBLED_COLOURS);
 		colours.set(50, Colour.RED);
 		// when
 		ObservableCube cube = new ObservableCube(colours);
@@ -76,7 +77,7 @@ public class CubeMapperTest {
 	@Test
 	public void ShouldMapScrambledCubeToThistlethwaite() {
 		// given
-		ObservableCube observableCube = new ObservableCube(ObservableCubeTest.scrambledColours);
+		ObservableCube observableCube = new ObservableCube(ObservableCubeTest.SCRAMBLED_COLOURS);
 		// when
 		ThistlethwaiteCube thistlethwaiteCube = CubeMapper.map(observableCube);
 		// then
@@ -107,6 +108,18 @@ public class CubeMapperTest {
 		// then
 		assertNotNull(observableCube);
 		assertEquals(expected.getColours(), observableCube.getColours());
+	}
+
+	@Test
+	public void ShouldMapSolvedScrambledCubeInBothDirections() {
+		// given
+		ObservableCube scrambled = new ObservableCube(ObservableCubeTest.SCRAMBLED_COLOURS);
+		// when
+		ThistlethwaiteCube mapped = CubeMapper.map(scrambled);
+		ObservableCube result = CubeMapper.map(mapped, scrambled.getCenterColours());
+		// then
+		assertNotNull(result);
+		assertEquals(ObservableCubeTest.SCRAMBLED_COLOURS, result.getColours());
 	}
 
 }
