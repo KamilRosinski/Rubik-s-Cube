@@ -9,6 +9,7 @@ public enum Move {
 	R1(Face.RIGHT, 1), R2(Face.RIGHT, 2), R3(Face.RIGHT, 3), //
 	U1(Face.UP, 1), U2(Face.UP, 2), U3(Face.UP, 3), //
 	D1(Face.DOWN, 1), D2(Face.DOWN, 2), D3(Face.DOWN, 3);
+
 	private Face face;
 	private int angle;
 

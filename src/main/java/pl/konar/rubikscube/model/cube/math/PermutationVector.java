@@ -1,5 +1,6 @@
 package pl.konar.rubikscube.model.cube.math;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,18 +20,24 @@ public class PermutationVector extends Vector<Integer> {
 		Set<Integer> insertedValues = new HashSet<>(size());
 		for (int index = 0; index < size(); ++index) {
 			if (!(values[index] < size() && insertedValues.add(values[index]))) {
-				throw new IllegalPermutationVectorException("Illegag permutation vector: " + values + ".");
+				throw new IllegalPermutationVectorException(
+						"Illegal permutation vector: " + Arrays.toString(values) + ".");
 			}
 			set(index, values[index]);
 		}
 	}
 
-	public void permute(Integer[] cycle) {
-		Integer tmp = get(cycle[0]);
-		for (ModularInteger index : ModularInteger.getPossibleValues(cycle.length)) {
-			set(cycle[index.getValue()], get(cycle[index.add(1).getValue()]));
+	public PermutationVector permute(int... cycle) {
+		int[] result = new int[size()];
+		for (int index = 0; index < size(); ++index) {
+			result[index] = get(index);
 		}
-		set(cycle[cycle.length - 1], tmp);
+		int tmp = get(cycle[0]);
+		for (ModularInteger index : ModularInteger.getPossibleValues(cycle.length)) {
+			result[cycle[index.getValue()]] = get(cycle[index.add(1).getValue()]);
+		}
+		result[cycle[cycle.length - 1]] = tmp;
+		return new PermutationVector(result);
 	}
 
 	public PermutationParity parity() {

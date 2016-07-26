@@ -31,11 +31,11 @@ public class Vector<T> implements Iterable<T> {
 	protected void set(int index, T value) {
 		values[index] = value;
 	}
-	
+
 	public T[] toArray() {
 		return values;
 	}
-	
+
 	@Override
 	public Iterator<T> iterator() {
 		return new Iterator<T>() {
@@ -82,11 +82,12 @@ public class Vector<T> implements Iterable<T> {
 
 	@Override
 	public String toString() {
-		String result = "[";
-		for (T element : values) {
-			result += " " + element;
-		}
-		return result + " ]";
+		return Arrays.toString(values);
+		// String result = "[";
+		// for (T element : values) {
+		// result += " " + element;
+		// }
+		// return result + " ]";
 	}
 
 }

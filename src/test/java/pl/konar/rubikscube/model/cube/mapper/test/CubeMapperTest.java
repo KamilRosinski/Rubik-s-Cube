@@ -12,7 +12,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import pl.konar.rubikscube.model.colour.Colour;
-import pl.konar.rubikscube.model.cube.Move;
 import pl.konar.rubikscube.model.cube.ObservableCube;
 import pl.konar.rubikscube.model.cube.ThistlethwaiteCube;
 import pl.konar.rubikscube.model.cube.builder.ThistlethwaiteCubeBuilder;
@@ -121,5 +120,5 @@ public class CubeMapperTest {
 		assertNotNull(result);
 		assertEquals(ObservableCubeTest.SCRAMBLED_COLOURS, result.getColours());
 	}
-
+	
 }

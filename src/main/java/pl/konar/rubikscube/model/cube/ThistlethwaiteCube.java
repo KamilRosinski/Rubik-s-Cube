@@ -13,19 +13,19 @@ public class ThistlethwaiteCube {
 
 	public ThistlethwaiteCube(PermutationVector cornersPermutation, OrientationVector cornersOrientation,
 			PermutationVector edgesPermutation, OrientationVector edgesOrientation) {
-		if (cornersPermutation != null && cornersPermutation.size() != CubeConstants.NUMBER_OF_CORNERS) {
+		if (cornersPermutation == null || cornersPermutation.size() != CubeConstants.NUMBER_OF_CORNERS) {
 			throw new IllegalCubeException("Cube must have " + CubeConstants.NUMBER_OF_CORNERS + " corners.");
 		}
 		this.cornersPermutation = cornersPermutation;
-		if (cornersOrientation != null && cornersOrientation.size() != CubeConstants.NUMBER_OF_CORNERS) {
+		if (cornersOrientation == null || cornersOrientation.size() != CubeConstants.NUMBER_OF_CORNERS) {
 			throw new IllegalCubeException("Cube must have " + CubeConstants.NUMBER_OF_CORNERS + " corners.");
 		}
 		this.cornersOrientation = cornersOrientation;
-		if (edgesPermutation != null && edgesPermutation.size() != CubeConstants.NUMBER_OF_EDGES) {
+		if (edgesPermutation == null || edgesPermutation.size() != CubeConstants.NUMBER_OF_EDGES) {
 			throw new IllegalCubeException("Cube must have " + CubeConstants.NUMBER_OF_EDGES + " edges.");
 		}
 		this.edgesPermutation = edgesPermutation;
-		if (edgesOrientation != null && edgesOrientation.size() != CubeConstants.NUMBER_OF_EDGES) {
+		if (edgesOrientation == null || edgesOrientation.size() != CubeConstants.NUMBER_OF_EDGES) {
 			throw new IllegalCubeException("Cube must have " + CubeConstants.NUMBER_OF_EDGES + " edges.");
 		}
 		this.edgesOrientation = edgesOrientation;
@@ -47,9 +47,13 @@ public class ThistlethwaiteCube {
 		return cornersOrientation;
 	}
 
-	public ThistlethwaiteCube ApplyMove(Move move) {
-		// TODO: move
-		return null;
+	public ThistlethwaiteCube applyMove(Move move) {
+		PermutationVector newCornersPermutation = cornersPermutation;//.permute(1, 2, 3, 4);
+		PermutationVector newEdgesPermutation = edgesPermutation;
+		OrientationVector newCornersOrientation = cornersOrientation;
+		OrientationVector newEdgesOrientation = edgesOrientation;
+		return new ThistlethwaiteCube(newCornersPermutation, newCornersOrientation, newEdgesPermutation,
+				newEdgesOrientation);
 	}
 
 	@Override
@@ -110,5 +114,5 @@ public class ThistlethwaiteCube {
 	public String toString() {
 		return cornersPermutation + "\n" + cornersOrientation + "\n" + edgesPermutation + "\n" + edgesOrientation;
 	}
-	
+
 }

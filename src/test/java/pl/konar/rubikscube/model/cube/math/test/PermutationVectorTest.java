@@ -61,9 +61,9 @@ public class PermutationVectorTest {
 	public void shouldPermuteTwoElements() {
 		// given
 		PermutationVector permutation = new PermutationVector(4);
-		Integer[] cycle = { 0, 2 };
+		int[] cycle = { 0, 2 };
 		// when
-		permutation.permute(cycle);
+		permutation = permutation.permute(cycle);
 		List<Integer> result = new ArrayList<>();
 		for (Integer i : permutation) {
 			result.add(i);

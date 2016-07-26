@@ -58,7 +58,7 @@ public class CubeMapper {
 			invCornersPerm[cornersPermutation[i]] = i;
 		}
 		for (int i = 0; i < 8; ++i) {
-			cornersOrientation[/*invCornersPerm*/cornersPermutation[i]] = cubeCorners.get(cornersPermutation[i])
+			cornersOrientation[cornersPermutation[i]] = cubeCorners.get(cornersPermutation[i])
 					.relativeTwist(solvedCorners.get(i));
 		}
 
@@ -73,10 +73,12 @@ public class CubeMapper {
 			invEdgesPerm[edgesPermutation[i]] = i;
 		}
 		for (int i = 0; i < 12; ++i) {
-			edgesOrientation[/*invEdgesPerm*/edgesPermutation[i]] = cubeEdges.get(edgesPermutation[i]).relativeTwist(solvedEdges.get(i));
+			edgesOrientation[edgesPermutation[i]] = cubeEdges.get(edgesPermutation[i])
+					.relativeTwist(solvedEdges.get(i));
 		}
 
-		return new ThistlethwaiteCube(new PermutationVector(cornersPermutation),
+		return new ThistlethwaiteCube( //
+				new PermutationVector(cornersPermutation),
 				new OrientationVector(CubeConstants.NUMBER_OF_FACETS_PER_CORNER, cornersOrientation),
 				new PermutationVector(edgesPermutation),
 				new OrientationVector(CubeConstants.NUMBER_OF_FACETS_PER_EDGE, edgesOrientation));
@@ -109,55 +111,5 @@ public class CubeMapper {
 		}
 		return new ObservableCube(colours);
 	}
-
-	// private static void corners(List<Cubicle> cubeCorners, List<Cubicle>
-	// solvedCorners) {
-	// int[] permutation = new int[8];
-	// int[] invPerm = new int[8];
-	// int[] orientation = new int[8];
-	// for (int i = 0; i < 8; ++i) {
-	// permutation[i] = cubeCorners.indexOf(solvedCorners.get(i));
-	// invPerm[permutation[i]] = i;
-	// }
-	// for (int i = 0; i < 8; ++i) {
-	// orientation[invPerm[i]] =
-	// cubeCorners.get(permutation[i]).relativeTwist(solvedCorners.get(i));
-	// }
-	// for (int n : permutation) {
-	// System.err.print(n + " ");
-	// }
-	// System.err.println("");
-	// for (int n : orientation) {
-	// System.err.print(n + " ");
-	// }
-	// System.err.println("");
-	// }
-
-	// private static void edges(List<Cubicle> cubeEdges, List<Cubicle>
-	// solvedEdges) {
-	// int[] permutation = new int[12];
-	// int[] invPerm = new int[12];
-	// int[] orientation = new int[12];
-	// for (int i = 0; i < 12; ++i) {
-	// permutation[i] = cubeEdges.indexOf(solvedEdges.get(i));
-	// invPerm[permutation[i]] = i;
-	// }
-	// for (int i = 0; i < 12; ++i) {
-	// // int twist =
-	// // solvedCorners.get(invPerm[i]).relativeTwist(cubeCorners.get(i));
-	// int twist =
-	// cubeEdges.get(permutation[i]).relativeTwist(solvedEdges.get(i));
-	// orientation[invPerm[i]] = twist;
-	// // System.err.println(i + "\t" + permutation[i] + "\t" + twist);
-	// }
-	// for (int n : permutation) {
-	// System.err.print(n + " ");
-	// }
-	// System.err.println("");
-	// for (int n : orientation) {
-	// System.err.print(n + " ");
-	// }
-	// System.err.println("");
-	// }
 
 }
