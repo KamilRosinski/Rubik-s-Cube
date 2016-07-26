@@ -68,7 +68,7 @@ public class ModularInteger {
 
 	@Override
 	public String toString() {
-		return String.valueOf(value) + "mod" + String.valueOf(base);
+		return String.valueOf(value) + "%" + String.valueOf(base);
 	}
 	
 }

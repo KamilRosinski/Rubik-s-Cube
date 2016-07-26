@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
+import pl.konar.rubikscube.model.cube.math.ModularInteger;
 import pl.konar.rubikscube.model.cube.math.OrientationVector;
 
 public class OrientationVectorTest {
@@ -15,8 +16,8 @@ public class OrientationVectorTest {
 		int size = 5;
 		int base = 3;
 		// when
-		OrientationVector orientation = new OrientationVector(size, base);
-		Integer expected = 0;
+		OrientationVector orientation = new OrientationVector(base, size);
+		ModularInteger expected = new ModularInteger(0, base);
 		// then
 		assertNotNull(orientation);
 		assertEquals(size, orientation.size());
@@ -25,17 +26,29 @@ public class OrientationVectorTest {
 	}
 
 	@Test
-	public void shouldIncreaseElement() {
+	public void shouldInitializeOrientationVectorFromArray() {
 		// given
-		int size = 5;
+		int[] elements = {0, 2, 1, 2};
 		int base = 3;
 		// when
-		OrientationVector orientation = new OrientationVector(size, base);
-		orientation.increaseElementBy(0, 4);
-		Integer expected = 1;
+		OrientationVector orientation = new OrientationVector(base, elements);
 		// then
 		assertNotNull(orientation);
-		assertEquals(expected , orientation.get(0));
+		assertEquals(elements.length, orientation.size());
 	}
+	
+//	@Test
+//	public void shouldIncreaseElement() {
+//		// given
+//		int size = 5;
+//		int base = 3;
+//		// when
+//		OrientationVector orientation = new OrientationVector(size, base);
+//		orientation.increaseElementBy(0, 4);
+//		Integer expected = 1;
+//		// then
+//		assertNotNull(orientation);
+//		assertEquals(expected , orientation.get(0));
+//	}
 
 }

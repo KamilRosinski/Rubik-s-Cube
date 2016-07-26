@@ -9,6 +9,7 @@ import pl.konar.rubikscube.model.cube.ObservableCube;
 import pl.konar.rubikscube.model.cube.ThistlethwaiteCube;
 import pl.konar.rubikscube.model.cube.cubicle.Cubicle;
 import pl.konar.rubikscube.model.cube.cubicle.CubicleFactory;
+import pl.konar.rubikscube.model.cube.math.ModularInteger;
 import pl.konar.rubikscube.model.cube.math.OrientationVector;
 import pl.konar.rubikscube.model.cube.math.PermutationVector;
 
@@ -94,7 +95,7 @@ public class CubeMapper {
 		Cubicle[] edges = new Cubicle[12];
 		for (int index = 0; index < 12; ++index) {
 			Integer position = cube.getEdgesPermutation().get(index);
-			Integer angle = cube.getEdgesOrientation().get(position);
+			ModularInteger angle = cube.getEdgesOrientation().get(position);
 			edges[position] = solvedEdges.get(index).twist(angle);
 		}
 		for (int index = 0; index < 12; ++index) {
@@ -103,7 +104,7 @@ public class CubeMapper {
 		Cubicle[] corners = new Cubicle[8];
 		for (int index = 0; index < 8; ++index) {
 			Integer position = cube.getCornersPermutation().get(index);
-			Integer angle = cube.getCornersOrientation().get(position);
+			ModularInteger angle = cube.getCornersOrientation().get(position);
 			corners[position] = solvedCorners.get(index).twist(angle);
 		}
 		for (Cubicle cubicle : corners) {

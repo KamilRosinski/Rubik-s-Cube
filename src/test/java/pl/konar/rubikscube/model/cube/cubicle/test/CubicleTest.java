@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import pl.konar.rubikscube.model.colour.Colour;
 import pl.konar.rubikscube.model.cube.cubicle.Cubicle;
+import pl.konar.rubikscube.model.cube.math.ModularInteger;
 
 public class CubicleTest {
 
@@ -89,12 +90,12 @@ public class CubicleTest {
 	public void shouldTwistCubicle() {
 		// given
 		Cubicle cubicle = new Cubicle(Colour.YELLOW, Colour.BLUE, Colour.RED);
-		int twistAngle = 1;
+		ModularInteger twistAngle = new ModularInteger(1, 3);
 		// when
 		Cubicle twisted = cubicle.twist(twistAngle);
 		// then
 		assertNotNull(twisted);
-		assertEquals(twistAngle, twisted.relativeTwist(cubicle));
+		assertEquals(twistAngle.getValue(), twisted.relativeTwist(cubicle));
 
 	}
 

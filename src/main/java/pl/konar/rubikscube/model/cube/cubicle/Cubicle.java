@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import pl.konar.rubikscube.model.colour.Colour;
+import pl.konar.rubikscube.model.cube.math.ModularInteger;
 
 public class Cubicle {
 
@@ -30,11 +31,11 @@ public class Cubicle {
 		return (equals(cubicle) && !facets.isEmpty()) ? cubicle.getColours().indexOf(facets.get(0)) : -1;
 	}
 
-	public Cubicle twist(int angle) {
+	public Cubicle twist(ModularInteger angle) {
 		List<Colour> colours = new ArrayList<>();
-		angle = angle % facets.size();
-		colours.addAll(facets.subList(angle, facets.size()));
-		colours.addAll(facets.subList(0, angle));
+//		angle = angle % facets.size();
+		colours.addAll(facets.subList(angle.getValue(), facets.size()));
+		colours.addAll(facets.subList(0, angle.getValue()));
 		return new Cubicle(colours);
 	}
 

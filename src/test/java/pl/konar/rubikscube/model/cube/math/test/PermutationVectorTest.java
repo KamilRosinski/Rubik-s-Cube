@@ -63,7 +63,7 @@ public class PermutationVectorTest {
 		PermutationVector permutation = new PermutationVector(4);
 		int[] cycle = { 0, 2 };
 		// when
-		permutation = permutation.permute(cycle);
+		permutation = permutation.applyCycle(cycle);
 		List<Integer> result = new ArrayList<>();
 		for (Integer i : permutation) {
 			result.add(i);
