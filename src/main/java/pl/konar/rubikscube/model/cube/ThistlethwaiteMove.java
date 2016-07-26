@@ -1,37 +1,50 @@
 package pl.konar.rubikscube.model.cube;
 
+import pl.konar.rubikscube.model.cube.math.OrientationVector;
+import pl.konar.rubikscube.model.cube.math.PermutationVector;
+
 public enum ThistlethwaiteMove {
 
-	U1(new int[] { 0, 1, 2, 3 }, new int[] { 1, 2, 1, 2 }, new int[] { 0, 1, 2, 3 }, new int[] { 1, 1, 1, 1 }), //
-	U2(new int[] { 2, 2, 0, 3 }, new int[] { 0, 0, 0, 0 }, new int[] { 2, 3, 0, 1 }, new int[] { 0, 0, 0, 0 }), //
-	U3(new int[] { 0, 1, 2, 3 }, new int[] { 0, 1, 2, 3 }, new int[] { 1, 2, 1, 2 }, new int[] { 1, 1, 1, 1 });
+	U1(new PermutationVector(1, 2, 3, 0, 4, 5, 6, 7),
+			new OrientationVector(CubeConstants.NUMBER_OF_FACETS_PER_CORNER, 1, 2, 1, 2, 0, 0, 0, 0),
+			new PermutationVector(1, 2, 3, 0, 4, 5, 6, 7, 8, 9, 10, 11),
+			new OrientationVector(CubeConstants.NUMBER_OF_FACETS_PER_EDGE, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0)), //
+	U2(new PermutationVector(0, 1, 2, 3, 4, 5, 6, 7),
+			new OrientationVector(CubeConstants.NUMBER_OF_FACETS_PER_CORNER, 0, 0, 0, 0, 0, 0, 0, 0),
+			new PermutationVector(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11),
+			new OrientationVector(CubeConstants.NUMBER_OF_FACETS_PER_EDGE, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)), //
+	U3(new PermutationVector(0, 1, 2, 3, 4, 5, 6, 7),
+			new OrientationVector(CubeConstants.NUMBER_OF_FACETS_PER_CORNER, 0, 0, 0, 0, 0, 0, 0, 0),
+			new PermutationVector(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11),
+			new OrientationVector(CubeConstants.NUMBER_OF_FACETS_PER_EDGE, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 
-	private int[] cornersCycle;
-	private int[] cornersFlip;
-	private int[] edgesCycle;
-	private int[] edgesFlip;
+	private PermutationVector cornersPermutation;
+	private OrientationVector cornersOrientation;
+	private PermutationVector edgesPermutation;
+	private OrientationVector edgesOrientation;
 
-	private ThistlethwaiteMove(int[] cornersCycle, int[] cornersFlip, int[] edgesCycle, int[] edgesFlip) {
-		this.cornersCycle = cornersCycle;
-		this.cornersFlip = cornersFlip;
-		this.edgesCycle = edgesCycle;
-		this.edgesFlip = edgesFlip;
+	private ThistlethwaiteMove(PermutationVector cornersPermutation, OrientationVector cornersOrientation,
+			PermutationVector edgesPermutation, OrientationVector edgesOrientation) {
+		this.cornersPermutation = cornersPermutation;
+		this.cornersOrientation = cornersOrientation;
+		this.edgesPermutation = edgesPermutation;
+		this.edgesOrientation = edgesOrientation;
 	}
 
-	public int[] getCornersCycle() {
-		return cornersCycle;
+	public PermutationVector getCornersPermutation() {
+		return cornersPermutation;
 	}
 
-	public int[] getEdgesCycle() {
-		return edgesCycle;
+	public PermutationVector getEdgesPermutation() {
+		return edgesPermutation;
 	}
 
-	public int[] getCornersFlip() {
-		return cornersFlip;
+	public OrientationVector getCornersOrientation() {
+		return cornersOrientation;
 	}
 
-	public int[] getEdgesFlip() {
-		return edgesFlip;
+	public OrientationVector getEdgesOrientation() {
+		return edgesOrientation;
 	}
 
 	@Override

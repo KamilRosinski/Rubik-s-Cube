@@ -15,7 +15,7 @@ public class OrientationVector extends Vector<ModularInteger> {
 		}
 	}
 
-	public OrientationVector(int base, int[] values) {
+	public OrientationVector(int base, int... values) {
 		super(values.length);
 		for (int index = 0; index < size(); ++index) {
 			if (values[index] >= base) {
@@ -35,6 +35,18 @@ public class OrientationVector extends Vector<ModularInteger> {
 			values[index] = (values[index] + increments[index]) % base;
 		}
 		return new OrientationVector(base, values);
+	}
+
+	public OrientationVector increaseElements(OrientationVector vector) {
+		if (vector == null || size() != vector.size()) {
+			throw new IllegalOrientationVectorException("Vectors must have equal lengths.");
+		}
+		OrientationVector result = new OrientationVector(base, size());
+		for (int index = 0; index < size(); ++index) {
+			ModularInteger value = get(index).add(vector.get(index));
+			result.set(index, value);
+		}
+		return result;
 	}
 
 	// public void increaseElementBy(int index, int increment) {

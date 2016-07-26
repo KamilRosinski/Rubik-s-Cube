@@ -35,4 +35,19 @@ public class ModularIntegerTest {
 		fail("Expected IllegalModularIntegerValueException");
 	}
 
+	@Test
+	public void shouldAddModularIntegers() {
+		// given
+		int base = 4;
+		ModularInteger first = new ModularInteger(2, base);
+		ModularInteger second = new ModularInteger(3, base);
+		ModularInteger expected = new ModularInteger(1, base);
+		// when
+		ModularInteger result = first.add(second);
+		// then
+		assertNotNull(result);
+		assertEquals(expected, result);
+	}
+	
 }
+

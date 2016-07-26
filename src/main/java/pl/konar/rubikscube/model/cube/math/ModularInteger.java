@@ -32,8 +32,8 @@ public class ModularInteger {
 		return result;
 	}
 
-	public ModularInteger add(int i) {
-		return new ModularInteger((value + i) % base, base);
+	public ModularInteger add(ModularInteger other) {
+		return new ModularInteger((value + other.value) % base, base);
 	}
 
 	@Override

@@ -4,10 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Test;
 
 import pl.konar.rubikscube.model.cube.math.PermutationVector;
@@ -58,18 +54,16 @@ public class PermutationVectorTest {
 	}
 
 	@Test
-	public void shouldPermuteTwoElements() {
+	public void shouldComposeTwoPermutations() {
 		// given
-		PermutationVector permutation = new PermutationVector(4);
-		int[] cycle = { 0, 2 };
+		PermutationVector first = new PermutationVector(1, 3, 0, 2, 4);
+		PermutationVector second = new PermutationVector(4, 3, 2, 1, 0);
+		PermutationVector expected = new PermutationVector(4, 2, 0, 3, 1);
 		// when
-		permutation = permutation.applyCycle(cycle);
-		List<Integer> result = new ArrayList<>();
-		for (Integer i : permutation) {
-			result.add(i);
-		}
+		PermutationVector result = first.compose(second);
 		// then
-		assertEquals(Arrays.asList(2, 1, 0, 3), result);
+		assertNotNull(result);
+		assertEquals(expected, result);
 	}
 
 }
