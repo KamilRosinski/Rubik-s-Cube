@@ -13,11 +13,11 @@ public class ThistlethwaiteSolver {
 	public static boolean isSolvable(ThistlethwaiteCube cube) {
 		return false;
 	}
-	
+
 	public static List<Move> solve(ThistlethwaiteCube cube) {
 		sleep(DELAY_MS);
 		// throw new CubeNotSolvableException("Could not solve given Cube.");
-		return Arrays.asList(Move.F1, Move.B3, Move.L1, Move.F2, Move.U3, Move.D2, Move.R2);
+		return Arrays.asList(Move.E, Move.D1, Move.U1, Move.R3, Move.L1, Move.F2, Move.U3, Move.D2, Move.R2);
 	}
 
 	private static void sleep(int delayMs) {

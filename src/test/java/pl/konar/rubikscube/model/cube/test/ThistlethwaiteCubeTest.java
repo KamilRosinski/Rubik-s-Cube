@@ -3,6 +3,9 @@ package pl.konar.rubikscube.model.cube.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Test;
 
 import pl.konar.rubikscube.model.colour.Colour;
@@ -129,6 +132,40 @@ public class ThistlethwaiteCubeTest {
 	@Test
 	public void ShouldMoveR3() {
 		testMove(Move.R3, ThistlethwaiteMove.RIGHT_3);
+	}
+
+	@Test
+	public void ShouldApplyListOfMoves() {
+		ObservableCube observable = CubeMapper.map(ThistlethwaiteCubeBuilder.buildSolvedCube(),
+				Colour.getAllNonTransparentList());
+		ThistlethwaiteCube thistlethwaiteCube = ThistlethwaiteCubeBuilder.buildSolvedCube();
+		List<Move> moves = Arrays.asList(//
+				Move.E, //
+				Move.U1, //
+				Move.R3, //
+				Move.D1, //
+				Move.L1, //
+				Move.F2, //
+				Move.U3, //
+				Move.D2, //
+				Move.R2 //
+		);
+		List<ThistlethwaiteMove> thistlethwaiteMoves = Arrays.asList(//
+				ThistlethwaiteMove.EMPTY, //
+				ThistlethwaiteMove.UP_1, //
+				ThistlethwaiteMove.RIGHT_3, //
+				ThistlethwaiteMove.DOWN_1, //
+				ThistlethwaiteMove.LEFT_1, //
+				ThistlethwaiteMove.FRONT_2, //
+				ThistlethwaiteMove.UP_3, //
+				ThistlethwaiteMove.DOWN_2, //
+				ThistlethwaiteMove.RIGHT_2 //
+		);
+		// when
+		observable.applyMoves(moves);
+		thistlethwaiteCube = thistlethwaiteCube.applyMoves(thistlethwaiteMoves);
+		// then
+		assertEquals(CubeMapper.map(observable), thistlethwaiteCube);
 	}
 
 }

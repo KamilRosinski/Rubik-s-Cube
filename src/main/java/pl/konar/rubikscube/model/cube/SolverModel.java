@@ -86,23 +86,13 @@ public class SolverModel {
 				result.add(solution.get(i).inverse());
 			}
 		}
-		applyMoves(result);
-	}
-
-	private void applyMoves(List<Move> moves) {
-		for (Move move : moves) {
-			rotateCube(move);
-		}
-	}
-
-	private void rotateCube(Move move) {
-		cube.applyMove(move);
+		cube.applyMoves(result);
 	}
 
 	public void fillCube() {
 		cube.fill();
-		// isSolvable.set(true);
 		checkIfSolvable();
+		isSolvable.set(true);
 	}
 
 	public int getCubeNthFacetNumber(int index) {

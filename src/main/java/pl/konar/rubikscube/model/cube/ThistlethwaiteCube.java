@@ -1,5 +1,7 @@
 package pl.konar.rubikscube.model.cube;
 
+import java.util.List;
+
 import pl.konar.rubikscube.model.cube.exception.IllegalCubeException;
 import pl.konar.rubikscube.model.cube.math.OrientationVector;
 import pl.konar.rubikscube.model.cube.math.PermutationVector;
@@ -47,13 +49,26 @@ public class ThistlethwaiteCube {
 		return cornersOrientation;
 	}
 
+	public ThistlethwaiteCube applyMoves(List<ThistlethwaiteMove> moves) {
+		ThistlethwaiteCube result = this;
+		for (ThistlethwaiteMove move : moves) {
+			result = result.applyMove(move);
+		}
+		return result;
+	}
+
 	public ThistlethwaiteCube applyMove(ThistlethwaiteMove move) {
-		OrientationVector newCornersOrientation = cornersOrientation.permute(getCornersPermutation())
+
+		OrientationVector newCornersOrientation = cornersOrientation.permute(move.getCornersPermutation().inverse())
 				.increaseElements(move.getCornersOrientation());
-		PermutationVector newCornersPermutation = cornersPermutation.permute(move.getCornersPermutation());
-		OrientationVector newEdgesOrientation = edgesOrientation.permute(getEdgesPermutation())
+
+		PermutationVector newCornersPermutation = move.getCornersPermutation().permute(cornersPermutation);
+
+		OrientationVector newEdgesOrientation = edgesOrientation.permute(move.getEdgesPermutation().inverse())
 				.increaseElements(move.getEdgesOrientation());
-		PermutationVector newEdgesPermutation = edgesPermutation.permute(move.getEdgesPermutation());
+
+		PermutationVector newEdgesPermutation = move.getEdgesPermutation().permute(edgesPermutation);
+
 		return new ThistlethwaiteCube(newCornersPermutation, newCornersOrientation, newEdgesPermutation,
 				newEdgesOrientation);
 	}
@@ -114,7 +129,8 @@ public class ThistlethwaiteCube {
 
 	@Override
 	public String toString() {
-		return cornersPermutation + "\n" + cornersOrientation + "\n" + edgesPermutation + "\n" + edgesOrientation;
+		return "\n" + cornersPermutation + "\n" + cornersOrientation + "\n" + edgesPermutation + "\n" + edgesOrientation
+				+ "\n";
 	}
 
 }

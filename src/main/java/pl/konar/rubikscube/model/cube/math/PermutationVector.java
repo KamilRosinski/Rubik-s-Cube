@@ -27,6 +27,14 @@ public class PermutationVector extends Vector<Integer> {
 		}
 	}
 
+	public PermutationVector inverse() {
+		Integer[] result = new Integer[size()];
+		for (int index = 0; index < size(); ++index) {
+			result[get(index)] = index;
+		}
+		return new PermutationVector(result);
+	}
+
 	@Override
 	public PermutationVector permute(PermutationVector permutation) {
 		return new PermutationVector(Arrays.copyOf(super.permute(permutation).toArray(), size(), Integer[].class));
