@@ -148,7 +148,9 @@ public class ThistlethwaiteCubeTest {
 				Move.F2, //
 				Move.U3, //
 				Move.D2, //
-				Move.R2 //
+				Move.R2, //
+				Move.B1, //
+				Move.D3//
 		);
 		List<ThistlethwaiteMove> thistlethwaiteMoves = Arrays.asList(//
 				ThistlethwaiteMove.EMPTY, //
@@ -159,7 +161,9 @@ public class ThistlethwaiteCubeTest {
 				ThistlethwaiteMove.FRONT_2, //
 				ThistlethwaiteMove.UP_3, //
 				ThistlethwaiteMove.DOWN_2, //
-				ThistlethwaiteMove.RIGHT_2 //
+				ThistlethwaiteMove.RIGHT_2, //
+				ThistlethwaiteMove.BACK_1, //
+				ThistlethwaiteMove.DOWN_3//
 		);
 		// when
 		observable.applyMoves(moves);
