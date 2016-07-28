@@ -1,6 +1,9 @@
 package pl.konar.rubikscube.model.cube.math;
 
+import java.util.Arrays;
+
 import pl.konar.rubikscube.model.cube.math.exception.IllegalOrientationVectorException;
+import pl.konar.rubikscube.model.cube.math.exception.WrongVectorLengthException;
 
 public class OrientationVector extends Vector<ModularInteger> {
 
@@ -26,6 +29,11 @@ public class OrientationVector extends Vector<ModularInteger> {
 		}
 	}
 
+	public OrientationVector(int base, ModularInteger... values) {
+		super(values);
+		this.base = base;
+	}
+
 	public OrientationVector increaseElements(int[] elements, int[] increments) {
 		int[] values = new int[size()];
 		for (int index = 0; index < elements.length; ++index) {
@@ -38,8 +46,8 @@ public class OrientationVector extends Vector<ModularInteger> {
 	}
 
 	public OrientationVector increaseElements(OrientationVector vector) {
-		if (vector == null || size() != vector.size()) {
-			throw new IllegalOrientationVectorException("Vectors must have equal lengths.");
+		if (size() != vector.size()) {
+			throw new WrongVectorLengthException("Vectors must have equal lengths.");
 		}
 		OrientationVector result = new OrientationVector(base, size());
 		for (int index = 0; index < size(); ++index) {
@@ -47,6 +55,12 @@ public class OrientationVector extends Vector<ModularInteger> {
 			result.set(index, value);
 		}
 		return result;
+	}
+
+	@Override
+	public OrientationVector permute(PermutationVector permutation) {
+		return new OrientationVector(base,
+				Arrays.copyOf(super.permute(permutation).toArray(), size(), ModularInteger[].class));
 	}
 
 	// public void increaseElementBy(int index, int increment) {

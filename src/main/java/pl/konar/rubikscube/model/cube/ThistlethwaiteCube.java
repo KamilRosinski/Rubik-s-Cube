@@ -48,10 +48,12 @@ public class ThistlethwaiteCube {
 	}
 
 	public ThistlethwaiteCube applyMove(ThistlethwaiteMove move) {
-		OrientationVector newCornersOrientation = cornersOrientation.increaseElements(move.getCornersOrientation());
-		PermutationVector newCornersPermutation = cornersPermutation.compose(move.getCornersPermutation());
-		OrientationVector newEdgesOrientation = edgesOrientation.increaseElements(move.getEdgesOrientation());
-		PermutationVector newEdgesPermutation = edgesPermutation.compose(move.getEdgesPermutation());
+		OrientationVector newCornersOrientation = cornersOrientation.permute(getCornersPermutation())
+				.increaseElements(move.getCornersOrientation());
+		PermutationVector newCornersPermutation = cornersPermutation.permute(move.getCornersPermutation());
+		OrientationVector newEdgesOrientation = edgesOrientation.permute(getEdgesPermutation())
+				.increaseElements(move.getEdgesOrientation());
+		PermutationVector newEdgesPermutation = edgesPermutation.permute(move.getEdgesPermutation());
 		return new ThistlethwaiteCube(newCornersPermutation, newCornersOrientation, newEdgesPermutation,
 				newEdgesOrientation);
 	}

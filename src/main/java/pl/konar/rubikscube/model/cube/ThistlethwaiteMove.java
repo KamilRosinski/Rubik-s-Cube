@@ -9,9 +9,9 @@ public enum ThistlethwaiteMove {
 			new OrientationVector(CubeConstants.NUMBER_OF_FACETS_PER_CORNER, 1, 2, 1, 2, 0, 0, 0, 0),
 			new PermutationVector(1, 2, 3, 0, 4, 5, 6, 7, 8, 9, 10, 11),
 			new OrientationVector(CubeConstants.NUMBER_OF_FACETS_PER_EDGE, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0)), //
-	U2(new PermutationVector(0, 1, 2, 3, 4, 5, 6, 7),
+	U2(new PermutationVector(2, 3, 0, 1, 4, 5, 6, 7),
 			new OrientationVector(CubeConstants.NUMBER_OF_FACETS_PER_CORNER, 0, 0, 0, 0, 0, 0, 0, 0),
-			new PermutationVector(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11),
+			new PermutationVector(2, 3, 0, 1, 4, 5, 6, 7, 8, 9, 10, 11),
 			new OrientationVector(CubeConstants.NUMBER_OF_FACETS_PER_EDGE, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)), //
 	U3(new PermutationVector(0, 1, 2, 3, 4, 5, 6, 7),
 			new OrientationVector(CubeConstants.NUMBER_OF_FACETS_PER_CORNER, 0, 0, 0, 0, 0, 0, 0, 0),

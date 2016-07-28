@@ -3,6 +3,8 @@ package pl.konar.rubikscube.model.cube.math;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import pl.konar.rubikscube.model.cube.math.exception.WrongVectorLengthException;
+
 public class Vector<T> implements Iterable<T> {
 
 	private T[] values;
@@ -32,8 +34,25 @@ public class Vector<T> implements Iterable<T> {
 		values[index] = value;
 	}
 
-	public T[] toArray() {
+	public Object[] toArray() {
+		// @SuppressWarnings("unchecked")
+		// T[] result = (T[]) new Object[size()];
+		// for (int index = 0; index < size(); ++index) {
+		// result[index] = (T) values[index];
+		// }
 		return values;
+	}
+
+	public Vector<T> permute(PermutationVector permutation) {
+		if (size() != permutation.size()) {
+			throw new WrongVectorLengthException("Permutation vector must be equal length as permuted vector, but are: "
+					+ permutation.size() + " and " + size() + ".");
+		}
+		Vector<T> result = new Vector<>(size());
+		for (int index = 0; index < size(); ++index) {
+			result.set(index, get(permutation.get(index)));
+		}
+		return result;
 	}
 
 	@Override

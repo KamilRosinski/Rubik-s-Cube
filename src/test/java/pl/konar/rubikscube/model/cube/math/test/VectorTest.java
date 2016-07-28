@@ -1,6 +1,9 @@
 package pl.konar.rubikscube.model.cube.math.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,14 +30,14 @@ public class VectorTest {
 	@Test
 	public void shouldInitializeVectorFromArray() {
 		// given
-		Integer[] values = {2, 3, 5};
+		Integer[] values = { 2, 3, 5 };
 		// when
 		Vector<Integer> vector = new Vector<>(values);
 		// then
 		assertNotNull(vector);
 		assertEquals(values[1], vector.get(1));
 	}
-	
+
 	@Test
 	public void shouldIterateOverVector() {
 		// given
@@ -70,6 +73,17 @@ public class VectorTest {
 		iterator.remove();
 		// then
 		fail("No exception thrown.");
+	}
+
+	@Test
+	public void shouldConvertVectorToArray() {
+		// given
+		Vector<Integer> vector = new Vector<>(1, 3, 2);
+		Integer[] expected = { 1, 3, 2 };
+		// when
+		Object[] result = vector.toArray();
+		// then
+		assertArrayEquals(expected, result);
 	}
 
 }

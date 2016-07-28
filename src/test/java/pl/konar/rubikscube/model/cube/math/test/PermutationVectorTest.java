@@ -26,7 +26,7 @@ public class PermutationVectorTest {
 	@Test
 	public void shouldInitializePermutationFromArray() {
 		// given
-		int[] elements = { 0, 2, 3, 4, 1 };
+		Integer[] elements = { 0, 2, 3, 4, 1 };
 		// when
 		PermutationVector permutation = new PermutationVector(elements);
 		// then
@@ -36,7 +36,7 @@ public class PermutationVectorTest {
 	@Test(expected = IllegalPermutationVectorException.class)
 	public void shouldThrowExceptionOnWrongElementValue() {
 		// given
-		int[] elements = { 0, 5, 3, 4, 1 };
+		Integer[] elements = { 0, 5, 3, 4, 1 };
 		// when
 		new PermutationVector(elements);
 		// then
@@ -46,7 +46,7 @@ public class PermutationVectorTest {
 	@Test(expected = IllegalPermutationVectorException.class)
 	public void shouldThrowExceptionOnNonUniqueElement() {
 		// given
-		int[] elements = { 0, 2, 2, 4, 1 };
+		Integer[] elements = { 0, 2, 2, 4, 1 };
 		// when
 		new PermutationVector(elements);
 		// then
@@ -60,7 +60,7 @@ public class PermutationVectorTest {
 		PermutationVector second = new PermutationVector(4, 3, 2, 1, 0);
 		PermutationVector expected = new PermutationVector(4, 2, 0, 3, 1);
 		// when
-		PermutationVector result = first.compose(second);
+		PermutationVector result = first.permute(second);
 		// then
 		assertNotNull(result);
 		assertEquals(expected, result);

@@ -51,7 +51,7 @@ public class CubeMapper {
 		List<Cubicle> cubeCorners = CubicleFactory.extractCornerCubicles(cube);
 		List<Cubicle> solvedCorners = CubicleFactory.extractCornerCubicles(solved);
 
-		int[] cornersPermutation = new int[8];
+		Integer[] cornersPermutation = new Integer[8];
 		int[] invCornersPerm = new int[8];
 		int[] cornersOrientation = new int[8];
 		for (int i = 0; i < 8; ++i) {
@@ -66,7 +66,7 @@ public class CubeMapper {
 		List<Cubicle> cubeEdges = CubicleFactory.extractEdgeCubicles(cube);
 		List<Cubicle> solvedEdges = CubicleFactory.extractEdgeCubicles(solved);
 
-		int[] edgesPermutation = new int[12];
+		Integer[] edgesPermutation = new Integer[12];
 		int[] invEdgesPerm = new int[12];
 		int[] edgesOrientation = new int[12];
 		for (int i = 0; i < 12; ++i) {
