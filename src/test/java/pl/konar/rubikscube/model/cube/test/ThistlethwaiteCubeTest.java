@@ -22,16 +22,16 @@ public class ThistlethwaiteCubeTest {
 	public void ShouldBuildSolvedCube() {
 		// given
 		// when
-		ThistlethwaiteCube cube = ThistlethwaiteCubeBuilder.buildSolvedCube();
+		ThistlethwaiteCube cube = ThistlethwaiteCubeBuilder.solvedCube();
 		// then
 		assertNotNull(cube);
 	}
 
 	private void testMove(Move move, ThistlethwaiteMove thistlethwaiteMove) {
 		// given
-		ObservableCube observable = CubeMapper.map(ThistlethwaiteCubeBuilder.buildSolvedCube(),
+		ObservableCube observable = CubeMapper.map(ThistlethwaiteCubeBuilder.solvedCube(),
 				Colour.getAllNonTransparentList());
-		ThistlethwaiteCube thistlethwaiteCube = ThistlethwaiteCubeBuilder.buildSolvedCube();
+		ThistlethwaiteCube thistlethwaiteCube = ThistlethwaiteCubeBuilder.solvedCube();
 		// when
 		observable.applyMove(move);
 		thistlethwaiteCube = thistlethwaiteCube.applyMove(thistlethwaiteMove);
@@ -136,9 +136,9 @@ public class ThistlethwaiteCubeTest {
 
 	@Test
 	public void ShouldApplyListOfMoves() {
-		ObservableCube observable = CubeMapper.map(ThistlethwaiteCubeBuilder.buildSolvedCube(),
+		ObservableCube observable = CubeMapper.map(ThistlethwaiteCubeBuilder.solvedCube(),
 				Colour.getAllNonTransparentList());
-		ThistlethwaiteCube thistlethwaiteCube = ThistlethwaiteCubeBuilder.buildSolvedCube();
+		ThistlethwaiteCube thistlethwaiteCube = ThistlethwaiteCubeBuilder.solvedCube();
 		List<Move> moves = Arrays.asList(//
 				Move.E, //
 				Move.U1, //

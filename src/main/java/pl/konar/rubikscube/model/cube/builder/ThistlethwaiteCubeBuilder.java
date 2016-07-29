@@ -7,7 +7,7 @@ import pl.konar.rubikscube.model.cube.math.PermutationVector;
 
 public class ThistlethwaiteCubeBuilder {
 
-	public static ThistlethwaiteCube buildSolvedCube() {
+	public static ThistlethwaiteCube solvedCube() {
 		PermutationVector cornersPermutation = new PermutationVector(CubeConstants.NUMBER_OF_CORNERS);
 		OrientationVector cornersOrientation = new OrientationVector(CubeConstants.NUMBER_OF_FACETS_PER_CORNER,
 				CubeConstants.NUMBER_OF_CORNERS);

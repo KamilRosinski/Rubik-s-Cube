@@ -20,6 +20,7 @@ public class OrientationVector extends Vector<ModularInteger> {
 
 	public OrientationVector(int base, int... values) {
 		super(values.length);
+		this.base = base;
 		for (int index = 0; index < size(); ++index) {
 			if (values[index] >= base) {
 				throw new IllegalOrientationVectorException(

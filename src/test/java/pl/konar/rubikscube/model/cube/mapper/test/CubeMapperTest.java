@@ -90,7 +90,7 @@ public class CubeMapperTest {
 		solvedCube.fill(Colour.getAllNonTransparentList());
 		// when
 		ThistlethwaiteCube thistlethwaiteCube = CubeMapper.map(solvedCube);
-		ThistlethwaiteCube expected = ThistlethwaiteCubeBuilder.buildSolvedCube();
+		ThistlethwaiteCube expected = ThistlethwaiteCubeBuilder.solvedCube();
 		// then
 		assertNotNull(thistlethwaiteCube);
 		assertEquals(expected, thistlethwaiteCube);
@@ -99,7 +99,7 @@ public class CubeMapperTest {
 	@Test
 	public void ShouldMapSolvedCubeToObservable() {
 		// given
-		ThistlethwaiteCube thistlethwaiteCube = ThistlethwaiteCubeBuilder.buildSolvedCube();
+		ThistlethwaiteCube thistlethwaiteCube = ThistlethwaiteCubeBuilder.solvedCube();
 		ObservableCube expected = new ObservableCube();
 		expected.fill(Colour.getAllNonTransparentList());
 		// when

@@ -15,7 +15,7 @@ import pl.konar.rubikscube.model.solver.ThistlethwaiteSolver;
 public class SolverModel {
 
 	private ObservableCube cube = new ObservableCube();
-	private ListProperty<Move> solution = new SimpleListProperty<>(FXCollections.observableArrayList());
+	private ListProperty<ThistlethwaiteMove> solution = new SimpleListProperty<>(FXCollections.observableArrayList());
 	private BooleanProperty isSolved = new SimpleBooleanProperty(false);
 	private BooleanProperty isSolvable = new SimpleBooleanProperty(false);
 
@@ -39,12 +39,8 @@ public class SolverModel {
 		isSolved.set(false);
 	}
 
-	public List<Move> solve() {
+	public List<ThistlethwaiteMove> solve() {
 		return ThistlethwaiteSolver.solve(CubeMapper.map(cube));
-		// List<Move> result = new ArrayList<>();
-		// result.add(Move.E);
-		// result.addAll(ThistlethwaiteSolver.solve(CubeMapper.map(cube)));
-		// return result;
 	}
 
 	public ListProperty<Colour> cubeFacetsProperty() {
@@ -67,16 +63,16 @@ public class SolverModel {
 		this.isSolvable.set(isSolvable);
 	}
 
-	public ListProperty<Move> solutionProperty() {
+	public ListProperty<ThistlethwaiteMove> solutionProperty() {
 		return solution;
 	}
 
-	public void setSolution(List<Move> solution) {
+	public void setSolution(List<ThistlethwaiteMove> solution) {
 		this.solution.get().setAll(solution);
 	}
 
 	public void applyPartialSolution(int oldIndex, int newIndex) {
-		List<Move> result = new ArrayList<>();
+		List<ThistlethwaiteMove> result = new ArrayList<>();
 		if (oldIndex < newIndex) {
 			for (int i = oldIndex + 1; i <= newIndex; ++i) {
 				result.add(solution.get(i));
@@ -86,7 +82,9 @@ public class SolverModel {
 				result.add(solution.get(i).inverse());
 			}
 		}
-		cube.applyMoves(result);
+		// TODO: apply moves on Thistlethwaite Cube
+		cube = CubeMapper.map(CubeMapper.map(cube).applyMoves(result), cube.getCenterColours());
+		// cube.applyMoves(result);
 	}
 
 	public void fillCube() {

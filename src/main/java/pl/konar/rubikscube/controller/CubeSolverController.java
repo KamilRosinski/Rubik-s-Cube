@@ -16,8 +16,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.GridPane;
 import pl.konar.rubikscube.model.cube.CubeConstants;
-import pl.konar.rubikscube.model.cube.Move;
 import pl.konar.rubikscube.model.cube.SolverModel;
+import pl.konar.rubikscube.model.cube.ThistlethwaiteMove;
 import pl.konar.rubikscube.model.cube.exception.CubeNotMappableException;
 import pl.konar.rubikscube.model.cube.exception.CubeNotSolvableException;
 
@@ -47,7 +47,7 @@ public class CubeSolverController {
 	private Button fillButton;
 
 	@FXML
-	private ListView<Move> solutionList;
+	private ListView<ThistlethwaiteMove> solutionList;
 
 	@FXML
 	private void initialize() {
@@ -116,10 +116,10 @@ public class CubeSolverController {
 
 	@FXML
 	private void solveButtonAction() {
-		Task<List<Move>> solverTask = new Task<List<Move>>() {
+		Task<List<ThistlethwaiteMove>> solverTask = new Task<List<ThistlethwaiteMove>>() {
 
 			@Override
-			protected List<Move> call() {
+			protected List<ThistlethwaiteMove> call() {
 				return model.solve();
 			}
 
@@ -139,10 +139,11 @@ public class CubeSolverController {
 				if (exception instanceof CubeNotMappableException) {
 					// TODO: Show error message.
 					System.err.println("Exception while mapping Cube: " + exception.getMessage());
-				}
-				if (exception instanceof CubeNotSolvableException) {
+				} else if (exception instanceof CubeNotSolvableException) {
 					// TODO: Show error message.
 					System.err.println("Exception while solving Cube: " + exception.getMessage());
+				} else {
+					System.err.println("Something went wrong: " + exception.getMessage());
 				}
 			}
 

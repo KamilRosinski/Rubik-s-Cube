@@ -10,7 +10,8 @@ public class ModularInteger {
 	public ModularInteger(int value, int base) {
 		if (value >= base) {
 			throw new IllegalModularIntegerValueException(
-					"ModularInteger value must not be greater equals to base: value=" + value + ", base=" + base + ".");
+					"ModularInteger value must not be greater or equal to base: value=" + value + ", base=" + base
+							+ ".");
 		}
 		this.value = value;
 		this.base = base;
