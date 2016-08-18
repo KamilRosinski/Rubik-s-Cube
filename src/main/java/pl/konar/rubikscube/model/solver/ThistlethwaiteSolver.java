@@ -27,24 +27,28 @@ public class ThistlethwaiteSolver {
 	// Move.L1, Move.F3);
 
 	public static List<ThistlethwaiteMove> solve(ThistlethwaiteCube cube) {
-		// sleep(DELAY_MS);
-
-		List<ThistlethwaiteMove> result = Arrays.asList(ThistlethwaiteMove.EMPTY);
+		List<ThistlethwaiteMove> result = new LinkedList<>(Arrays.asList(ThistlethwaiteMove.EMPTY));
 		Map<OrientationVector, OrientationVector> predecessors = new HashMap<>();
-		Map<ThistlethwaiteCube, ThistlethwaiteMove> previousMoves = new HashMap<>();
+		Map<OrientationVector, ThistlethwaiteMove> previousMoves = new HashMap<>();
 		Queue<ThistlethwaiteCube> toVisit = new LinkedList<>(Arrays.asList(cube));
-		while (!toVisit.isEmpty()) {
-			ThistlethwaiteCube currentCube = toVisit.poll();
+		ThistlethwaiteCube currentCube = toVisit.peek();
+		while (!toVisit.isEmpty() && !currentCube.getEdgesOrientation().equals(SOLVED_CUBE.getEdgesOrientation())) {
+			currentCube = toVisit.poll();
 			for (ThistlethwaiteMove move : ThistlethwaiteMove.values()) {
 				ThistlethwaiteCube newCube = currentCube.applyMove(move);
 				if (!predecessors.containsKey(newCube.getEdgesOrientation())) {
 					predecessors.put(newCube.getEdgesOrientation(), currentCube.getEdgesOrientation());
-					previousMoves.put(newCube, move);
+					previousMoves.put(newCube.getEdgesOrientation(), move);
 					toVisit.add(newCube);
 				}
 			}
 		}
-
+		OrientationVector currentState = currentCube.getEdgesOrientation();
+		while (!currentState.equals(cube.getEdgesOrientation())) {
+			result.add(0, previousMoves.get(currentState));
+			currentState = predecessors.get(currentState);
+		}
+		System.err.println(result);
 		return result;
 	}
 

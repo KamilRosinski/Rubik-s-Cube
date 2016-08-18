@@ -111,6 +111,16 @@ public enum ThistlethwaiteMove {
 		return edgesOrientation;
 	}
 
+	// public static List<ThistlethwaiteMove> notEmptyValues() {
+	// List<ThistlethwaiteMove> result = new ArrayList<>();
+	// for (ThistlethwaiteMove move : values()) {
+	// if (move != EMPTY) {
+	// result.add(move);
+	// }
+	// }
+	// return result;
+	// }
+
 	@Override
 	public String toString() {
 		return name();
