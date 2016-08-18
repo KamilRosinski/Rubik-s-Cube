@@ -1,5 +1,8 @@
 package pl.konar.rubikscube.model.cube;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pl.konar.rubikscube.model.cube.math.OrientationVector;
 import pl.konar.rubikscube.model.cube.math.PermutationVector;
 
@@ -111,15 +114,15 @@ public enum ThistlethwaiteMove {
 		return edgesOrientation;
 	}
 
-	// public static List<ThistlethwaiteMove> notEmptyValues() {
-	// List<ThistlethwaiteMove> result = new ArrayList<>();
-	// for (ThistlethwaiteMove move : values()) {
-	// if (move != EMPTY) {
-	// result.add(move);
-	// }
-	// }
-	// return result;
-	// }
+	public static List<ThistlethwaiteMove> notEmptyValues() {
+		List<ThistlethwaiteMove> result = new ArrayList<>();
+		for (ThistlethwaiteMove move : values()) {
+			if (move != EMPTY) {
+				result.add(move);
+			}
+		}
+		return result;
+	}
 
 	@Override
 	public String toString() {

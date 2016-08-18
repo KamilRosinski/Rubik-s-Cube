@@ -14,50 +14,59 @@ import pl.konar.rubikscube.model.cube.math.OrientationVector;
 
 public class ThistlethwaiteSolver {
 
-	// private static final int DELAY_MS = 250;
 	private static final ThistlethwaiteCube SOLVED_CUBE = ThistlethwaiteCubeBuilder.solvedCube();
 
 	public static boolean isSolvable(ThistlethwaiteCube cube) {
 		return false;
 	}
 
-	// List<Move> result = Arrays.asList(Move.E, Move.B1, Move.U1, Move.R3,
-	// Move.L1, Move.F2, Move.U3, Move.D2,
-	// Move.R2, Move.L1, Move.F3, Move.R3, Move.L1, Move.F2, Move.D2, Move.R2,
-	// Move.L1, Move.F3);
-
 	public static List<ThistlethwaiteMove> solve(ThistlethwaiteCube cube) {
-		List<ThistlethwaiteMove> result = new LinkedList<>(Arrays.asList(ThistlethwaiteMove.EMPTY));
+		List<ThistlethwaiteMove> result = new LinkedList<>();
 		Map<OrientationVector, OrientationVector> predecessors = new HashMap<>();
 		Map<OrientationVector, ThistlethwaiteMove> previousMoves = new HashMap<>();
-		Queue<ThistlethwaiteCube> toVisit = new LinkedList<>(Arrays.asList(cube));
+		Queue<ThistlethwaiteCube> toVisit = new LinkedList<>(Arrays.asList(cube, SOLVED_CUBE));
+		Map<OrientationVector, Direction> directions = new HashMap<>();
+		directions.put(cube.getEdgesOrientation(), Direction.FORWARD);
+		directions.put(SOLVED_CUBE.getEdgesOrientation(), Direction.BACKWARD);
 		ThistlethwaiteCube currentCube = toVisit.peek();
-		while (!toVisit.isEmpty() && !currentCube.getEdgesOrientation().equals(SOLVED_CUBE.getEdgesOrientation())) {
+		OrientationVector currentState = currentCube.getEdgesOrientation();
+		boolean stop = false;
+		int counter = 0;
+		while (!stop) {
 			currentCube = toVisit.poll();
-			for (ThistlethwaiteMove move : ThistlethwaiteMove.values()) {
+			currentState = currentCube.getEdgesOrientation();
+			Direction currentDirection = directions.get(currentState);
+			System.err.println(currentDirection);
+			for (ThistlethwaiteMove move : ThistlethwaiteMove.notEmptyValues()) {
 				ThistlethwaiteCube newCube = currentCube.applyMove(move);
-				if (!predecessors.containsKey(newCube.getEdgesOrientation())) {
-					predecessors.put(newCube.getEdgesOrientation(), currentCube.getEdgesOrientation());
-					previousMoves.put(newCube.getEdgesOrientation(), move);
+				OrientationVector newState = newCube.getEdgesOrientation();
+				if (!predecessors.containsKey(newState)) {
+					predecessors.put(newState, currentState);
+					previousMoves.put(newState, move);
+					directions.put(newState, currentDirection);
 					toVisit.add(newCube);
+					++counter;
+				}
+				if (directions.containsKey(newState) && directions.get(newState) != currentDirection) {
+					stop = true;
+					OrientationVector state = currentCube.getEdgesOrientation();
+					while (!state.equals(cube.getEdgesOrientation())) {
+						result.add(0, previousMoves.get(state));
+						state = predecessors.get(state);
+					}
+					result.add(move);
+					state = newState;
+					while (!state.equals(SOLVED_CUBE.getEdgesOrientation())) {
+						result.add(previousMoves.get(state));
+						state = predecessors.get(state);
+					}
 				}
 			}
 		}
-		OrientationVector currentState = currentCube.getEdgesOrientation();
-		while (!currentState.equals(cube.getEdgesOrientation())) {
-			result.add(0, previousMoves.get(currentState));
-			currentState = predecessors.get(currentState);
-		}
+		System.err.println(counter);
+		result.add(0, ThistlethwaiteMove.EMPTY);
 		System.err.println(result);
 		return result;
 	}
-
-	// private static void sleep(int delayMs) {
-	// try {
-	// Thread.sleep(delayMs);
-	// } catch (InterruptedException ex) {
-	// Thread.currentThread().interrupt();
-	// }
-	// }
 
 }
