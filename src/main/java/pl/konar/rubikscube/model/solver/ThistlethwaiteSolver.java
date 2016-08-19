@@ -31,39 +31,48 @@ public class ThistlethwaiteSolver {
 		ThistlethwaiteCube currentCube = toVisit.peek();
 		OrientationVector currentState = currentCube.getEdgesOrientation();
 		boolean stop = false;
-		int counter = 0;
 		while (!stop) {
 			currentCube = toVisit.poll();
 			currentState = currentCube.getEdgesOrientation();
 			Direction currentDirection = directions.get(currentState);
-			System.err.println(currentDirection);
-			for (ThistlethwaiteMove move : ThistlethwaiteMove.notEmptyValues()) {
+			List<ThistlethwaiteMove> moves = ThistlethwaiteMove.notEmptyValues();
+			for (int index = 0; index < moves.size() && !stop; ++index) {
+				ThistlethwaiteMove move = moves.get(index);
 				ThistlethwaiteCube newCube = currentCube.applyMove(move);
 				OrientationVector newState = newCube.getEdgesOrientation();
-				if (!predecessors.containsKey(newState)) {
+				if (!directions.containsKey(newState)) {
 					predecessors.put(newState, currentState);
 					previousMoves.put(newState, move);
 					directions.put(newState, currentDirection);
 					toVisit.add(newCube);
-					++counter;
 				}
 				if (directions.containsKey(newState) && directions.get(newState) != currentDirection) {
 					stop = true;
-					OrientationVector state = currentCube.getEdgesOrientation();
-					while (!state.equals(cube.getEdgesOrientation())) {
-						result.add(0, previousMoves.get(state));
-						state = predecessors.get(state);
+					if (currentDirection == Direction.BACKWARD) {
+						move = move.inverse();
+						OrientationVector tmpState = currentState;
+						currentState = newState;
+						newState = tmpState;
+						System.out.println(":)");
 					}
 					result.add(move);
-					state = newState;
-					while (!state.equals(SOLVED_CUBE.getEdgesOrientation())) {
-						result.add(previousMoves.get(state));
+					List<ThistlethwaiteMove> forwardSolution = new LinkedList<>();
+					OrientationVector state = currentState;
+					while (!state.equals(cube.getEdgesOrientation())) {
+						forwardSolution.add(0, previousMoves.get(state));
 						state = predecessors.get(state);
 					}
+					result.addAll(0, forwardSolution);
+					List<ThistlethwaiteMove> backwardSolution = new LinkedList<>();
+					state = newState;
+					while (!state.equals(SOLVED_CUBE.getEdgesOrientation())) {
+						backwardSolution.add(previousMoves.get(state).inverse());
+						state = predecessors.get(state);
+					}
+					result.addAll(backwardSolution);
 				}
 			}
 		}
-		System.err.println(counter);
 		result.add(0, ThistlethwaiteMove.EMPTY);
 		System.err.println(result);
 		return result;

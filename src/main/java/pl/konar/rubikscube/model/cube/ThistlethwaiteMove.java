@@ -124,13 +124,13 @@ public enum ThistlethwaiteMove {
 		return result;
 	}
 
+	public ThistlethwaiteMove inverse() {
+		return values()[ordinal() == 0 ? ordinal() : ordinal() + 2 * (1 - (ordinal() - 1) % 3)];
+	}
+
 	@Override
 	public String toString() {
 		return name();
-	}
-
-	public ThistlethwaiteMove inverse() {
-		return values()[ordinal() == 0 ? ordinal() : ordinal() + 2 * (1 - (ordinal() - 1) % 3)];
 	}
 
 }
