@@ -1,4 +1,4 @@
-package pl.konar.rubikscube.model.solver;
+package pl.konar.rubikscube.thistlethwaite.solver;
 
 public enum Direction {
 

@@ -10,7 +10,7 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import pl.konar.rubikscube.model.colour.Colour;
 import pl.konar.rubikscube.model.cube.mapper.CubeMapper;
-import pl.konar.rubikscube.model.solver.ThistlethwaiteSolver;
+import pl.konar.rubikscube.thistlethwaite.solver.ThistlethwaiteSolver;
 
 public class SolverModel {
 

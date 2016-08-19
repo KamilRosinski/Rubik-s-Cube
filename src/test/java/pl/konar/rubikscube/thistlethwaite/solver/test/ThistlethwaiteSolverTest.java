@@ -1,4 +1,4 @@
-package pl.konar.rubikscube.model.solver.test;
+package pl.konar.rubikscube.thistlethwaite.solver.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,7 +13,7 @@ import pl.konar.rubikscube.model.cube.ThistlethwaiteMove;
 import pl.konar.rubikscube.model.cube.builder.ThistlethwaiteCubeBuilder;
 import pl.konar.rubikscube.model.cube.mapper.CubeMapper;
 import pl.konar.rubikscube.model.cube.test.ObservableCubeTest;
-import pl.konar.rubikscube.model.solver.ThistlethwaiteSolver;
+import pl.konar.rubikscube.thistlethwaite.solver.ThistlethwaiteSolver;
 
 public class ThistlethwaiteSolverTest {
 
