@@ -5,8 +5,18 @@ import pl.konar.rubikscube.thistlethwaite.solver.Phase;
 
 public class ThistlethwaiteStateFactory {
 
+	private interface Creator {
+		public ThistlethwaiteState create(ThistlethwaiteCube cube);
+	}
+
+	private static final Creator[] CREATORS = { //
+			cube -> new ThistlethwaiteState1(cube), //
+			cube -> new ThistlethwaiteState2(cube), //
+			cube -> new ThistlethwaiteState3(cube), //
+			cube -> new ThistlethwaiteState4(cube) };
+
 	public static ThistlethwaiteState buildState(ThistlethwaiteCube cube, Phase phase) {
-		return new ThistlethwaiteState1(cube);
+		return CREATORS[phase.ordinal()].create(cube);
 	}
 
 }

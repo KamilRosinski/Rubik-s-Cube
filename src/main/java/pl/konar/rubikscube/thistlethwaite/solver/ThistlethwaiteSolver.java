@@ -46,9 +46,9 @@ public class ThistlethwaiteSolver {
 			ThistlethwaiteCube currentCube = toVisit.poll();
 			ThistlethwaiteState currentState = ThistlethwaiteStateFactory.buildState(currentCube, phase);
 			Direction currentDirection = directions.get(currentState);
-			List<ThistlethwaiteMove> moves = ThistlethwaiteMove.notEmptyValues();
-			for (int index = 0; index < moves.size() && !stop; ++index) {
-				ThistlethwaiteMove move = moves.get(index);
+			ThistlethwaiteMove[] moves = phase.getApplicableMoves();
+			for (int index = 0; index < moves.length && !stop; ++index) {
+				ThistlethwaiteMove move = moves[index];
 				ThistlethwaiteCube newCube = currentCube.applyMove(move);
 				ThistlethwaiteState newState = ThistlethwaiteStateFactory.buildState(newCube, phase);
 				if (!directions.containsKey(newState)) {

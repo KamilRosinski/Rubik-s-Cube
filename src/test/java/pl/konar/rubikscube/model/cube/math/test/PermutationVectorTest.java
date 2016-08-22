@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import pl.konar.rubikscube.model.cube.math.PermutationParity;
 import pl.konar.rubikscube.model.cube.math.PermutationVector;
 import pl.konar.rubikscube.model.cube.math.exception.IllegalPermutationVectorException;
 
@@ -64,6 +65,28 @@ public class PermutationVectorTest {
 		// then
 		assertNotNull(result);
 		assertEquals(expected, result);
+	}
+
+	@Test
+	public void shouldCheckEvenParity() {
+		// given
+		PermutationVector permutation = new PermutationVector(0, 3, 4, 1, 2);
+		// when
+		PermutationParity parity = permutation.parity();
+		// then
+		assertNotNull(parity);
+		assertEquals(PermutationParity.EVEN, parity);
+	}
+
+	@Test
+	public void shouldCheckOddParity() {
+		// given
+		PermutationVector permutation = new PermutationVector(0, 3, 2, 1, 6, 7, 4, 5);
+		// when
+		PermutationParity parity = permutation.parity();
+		// then
+		assertNotNull(parity);
+		assertEquals(PermutationParity.ODD, parity);
 	}
 
 }

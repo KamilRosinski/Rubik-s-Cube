@@ -41,8 +41,20 @@ public class PermutationVector extends Vector<Integer> {
 	}
 
 	public PermutationParity parity() {
-		// TODO: Parity check.
-		return null;
+		boolean[] visited = new boolean[size()];
+		int numberOfEvenCycles = 0;
+		for (int index = 0; index < size(); ++index) {
+			if (visited[index] == false) {
+				int cycleLength = 0, i = index;
+				do {
+					visited[i] = true;
+					i = get(i);
+					++cycleLength;
+				} while (index != i);
+				numberOfEvenCycles += (cycleLength + 1) % 2;
+			}
+		}
+		return PermutationParity.values()[numberOfEvenCycles % 2];
 	}
 
 }
