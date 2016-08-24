@@ -35,6 +35,12 @@ public class PermutationVector extends Vector<Integer> {
 		return new PermutationVector(result);
 	}
 
+	public void swap(int firstIndex, int secondIndex) {
+		Integer tmp = get(firstIndex);
+		set(firstIndex, get(secondIndex));
+		set(secondIndex, tmp);
+	}
+
 	@Override
 	public PermutationVector permute(PermutationVector permutation) {
 		return new PermutationVector(Arrays.copyOf(super.permute(permutation).toArray(), size(), Integer[].class));

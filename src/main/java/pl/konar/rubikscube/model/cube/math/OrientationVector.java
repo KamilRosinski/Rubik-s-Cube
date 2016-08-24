@@ -58,14 +58,24 @@ public class OrientationVector extends Vector<ModularInteger> {
 		return result;
 	}
 
+	public void increaseElement(int index, int value) {
+		int newValue = (get(index).getValue() + value) % base;
+		set(index, new ModularInteger(newValue, base));
+	}
+
+	public ModularInteger sum() {
+		ModularInteger result = new ModularInteger(0, base);
+		for (ModularInteger element : this) {
+			result = result.add(element);
+		}
+		return result;
+	}
+
 	@Override
+
 	public OrientationVector permute(PermutationVector permutation) {
 		return new OrientationVector(base,
 				Arrays.copyOf(super.permute(permutation).toArray(), size(), ModularInteger[].class));
 	}
-
-	// public void increaseElementBy(int index, int increment) {
-	// set(index, (get(index) + increment) % base);
-	// }
 
 }

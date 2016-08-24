@@ -10,6 +10,7 @@ import java.util.Queue;
 import pl.konar.rubikscube.model.cube.ThistlethwaiteCube;
 import pl.konar.rubikscube.model.cube.ThistlethwaiteMove;
 import pl.konar.rubikscube.model.cube.builder.ThistlethwaiteCubeBuilder;
+import pl.konar.rubikscube.model.cube.exception.CubeNotSolvableException;
 import pl.konar.rubikscube.thistlethwaite.state.ThistlethwaiteState;
 import pl.konar.rubikscube.thistlethwaite.state.ThistlethwaiteStateFactory;
 
@@ -17,11 +18,31 @@ public class ThistlethwaiteSolver {
 
 	private static final ThistlethwaiteCube SOLVED_CUBE = ThistlethwaiteCubeBuilder.solvedCube();
 
+	public static boolean isSolved(ThistlethwaiteCube cube) {
+		return SOLVED_CUBE.equals(cube);
+	}
+
 	public static boolean isSolvable(ThistlethwaiteCube initialCube) {
-		return false;
+		return chceckEdgesOrientationSolvability(initialCube) && checkCornersOrientationSolvability(initialCube)
+				&& checkPermutationSolvability(initialCube);
+	}
+
+	private static boolean chceckEdgesOrientationSolvability(ThistlethwaiteCube initialCube) {
+		return initialCube.getEdgesOrientation().sum().getValue() == 0;
+	}
+
+	private static boolean checkCornersOrientationSolvability(ThistlethwaiteCube initialCube) {
+		return initialCube.getCornersOrientation().sum().getValue() == 0;
+	}
+
+	private static boolean checkPermutationSolvability(ThistlethwaiteCube initialCube) {
+		return initialCube.getEdgesPermutation().parity() == initialCube.getCornersPermutation().parity();
 	}
 
 	public static List<ThistlethwaiteMove> solve(ThistlethwaiteCube initialCube) {
+		if (!isSolvable(initialCube)) {
+			throw new CubeNotSolvableException("Given cube is not solvable:" + initialCube);
+		}
 		List<ThistlethwaiteMove> solution = new LinkedList<>();
 		for (Phase phase : Phase.values()) {
 			List<ThistlethwaiteMove> phaseSolution = solvePhase(initialCube, phase);
