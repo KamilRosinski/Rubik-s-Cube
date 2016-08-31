@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Solver.jnlp">
+  <information>
+    <title>Solver</title>
+    <vendor>Kamil Rosi?ski</vendor>
+    <description>Rubik's Cube Solver</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="Solver.jar" size="61943" download="eager" />
+    <jar href="libs\junit.jar" size="314932" download="eager" />
+    <jar href="libs\org.hamcrest.core_1.3.0.v201303031735.jar" size="55198" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="800" height="600" main-class="pl.konar.rubikscube.application.Startup"  name="Rubik's Cube Solver" />
+  <update check="background"/>
+</jnlp>
