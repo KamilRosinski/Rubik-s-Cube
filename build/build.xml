@@ -33,7 +33,7 @@
 		<mkdir dir="project" />
 		<copy todir="project">
 			<fileset dir="C:\Users\karosins\git\Rubik-s-Cube">
-				<include name="src\main\java/**" />
+				<include name="src\main\resources/**" />
 			</fileset>
 		</copy>
 		<copy todir="project">
@@ -43,7 +43,7 @@
 		</copy>
 		<copy todir="project">
 			<fileset dir="C:\Users\karosins\git\Rubik-s-Cube">
-				<include name="src\main\resources/**" />
+				<include name="src\main\java/**" />
 			</fileset>
 		</copy>
 	
@@ -167,6 +167,9 @@
 			<fx:resources refid="appRes"/>
 		</fx:deploy>
 	
+		<fx:csstobin outdir="build/classes">
+			<fileset dir="build/classes" includes="**/*.css"/>
+		</fx:csstobin>
 	
 	</target>
 </project>

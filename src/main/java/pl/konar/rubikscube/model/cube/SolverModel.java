@@ -30,8 +30,8 @@ public class SolverModel {
 	}
 
 	public void changeColour(int facetNumber) {
-		System.err.println("Setting colour: " + currentColour);
-		cube.setColour(facetNumber, currentColour);
+		Colour newColour = cube.getColour(facetNumber) == currentColour ? Colour.TRANSPARENT : currentColour;
+		cube.setColour(facetNumber, newColour);
 		checkIfSolvable();
 	}
 
@@ -40,11 +40,12 @@ public class SolverModel {
 		isSolvable.set(CubeMapper.isMappable(cube) && ThistlethwaiteSolver.isSolvable(CubeMapper.map(cube)));
 	}
 
-	public void resetCube() {
+	public void reset() {
 		cube.reset();
 		solution.clear();
 		isSolvable.set(false);
 		isSolved.set(false);
+		currentColour = Colour.TRANSPARENT;
 	}
 
 	public List<ThistlethwaiteMove> solve() {

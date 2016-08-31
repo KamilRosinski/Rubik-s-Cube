@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -15,7 +16,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -31,7 +32,6 @@ import pl.konar.rubikscube.model.cube.exception.CubeNotSolvableException;
 
 public class CubeSolverController {
 
-	// private static final double BUTTON_SIZE = 40;
 	private static final int[] FACE_X_OFFSETS = { 4, 12, 8, 4, 0, 4 };
 	private static final int[] FACE_Y_OFFSETS = { 0, 4, 4, 4, 4, 8 };
 
@@ -73,15 +73,15 @@ public class CubeSolverController {
 	private void initializeColourSelection() {
 		colourSelectionBox.disableProperty().bind(model.isSolvedProperty());
 		ToggleGroup colourGroup = new ToggleGroup();
-		for (Colour colour : Colour.values()) {
-			RadioButton button = new RadioButton();
-			button.setOnAction(event -> model.setCurrentColour(colour));
-			button.setSelected(Colour.TRANSPARENT == colour);
+		for (Colour colour : Colour.getAllNonTransparentList()) {
+			ToggleButton button = new ToggleButton();
 			button.setToggleGroup(colourGroup);
-			button.setStyle("-fx-color: " + colour);
+			button.setOnAction(event -> model.setCurrentColour(button.isSelected() ? colour : Colour.TRANSPARENT));
+			button.getStyleClass().add("facet");
+			button.getStyleClass().add("colour-picker");
+			button.setStyle("-fx-background-color: " + colour);
 			colourSelectionBox.getChildren().add(button);
 		}
-
 	}
 
 	private void initializeCubeLayout() {
@@ -99,7 +99,7 @@ public class CubeSolverController {
 
 	private void initializeFacetButton(Button button, int wall, int row, int column) {
 		button.getStyleClass().add("facet");
-		// button.setPrefSize(BUTTON_SIZE, BUTTON_SIZE);
+		button.getStyleClass().add("cube-layout");
 		int facetNumber = model.getCubeNthFacetNumber(CubeConstants.NUMBER_OF_FACETS_PER_FACE * wall
 				+ CubeConstants.NUMBER_OF_COLUMNS_PER_FACE * row + column);
 		button.setOnAction(event -> {
@@ -109,10 +109,8 @@ public class CubeSolverController {
 	}
 
 	private void bindButtonToFacet(Button button, int buttonFacetNumber) {
-		button.styleProperty()
-				.bind(Bindings.concat(
-						"-fx-border-color: black; -fx-border-radius: 4px; -fx-background-insets: 2; -fx-background-radius: 4px; -fx-background-color: ",
-						Bindings.valueAt(model.cubeFacetsProperty(), buttonFacetNumber)));
+		button.styleProperty().bind(Bindings.concat("-fx-background-color: ",
+				Bindings.valueAt(model.cubeFacetsProperty(), buttonFacetNumber)));
 	}
 
 	private void initializeSolveButton() {
@@ -185,6 +183,11 @@ public class CubeSolverController {
 				model.setIsSolvable(false);
 				solutionList.getSelectionModel().select(0);
 				alert.hide();
+				for (Node node : colourSelectionBox.getChildren()) {
+					if (node instanceof ToggleButton) {
+						((ToggleButton) node).setSelected(false);
+					}
+				}
 			}
 
 			@Override
@@ -214,7 +217,7 @@ public class CubeSolverController {
 
 	@FXML
 	private void resetButtonAction() {
-		model.resetCube();
+		model.reset();
 	}
 
 	@FXML
