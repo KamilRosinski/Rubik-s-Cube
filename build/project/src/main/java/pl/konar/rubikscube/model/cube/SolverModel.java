@@ -36,7 +36,6 @@ public class SolverModel {
 	}
 
 	private void checkIfSolvable() {
-		System.err.println(CubeMapper.isMappable(cube));
 		isSolvable.set(CubeMapper.isMappable(cube) && ThistlethwaiteSolver.isSolvable(CubeMapper.map(cube)));
 	}
 
@@ -83,7 +82,6 @@ public class SolverModel {
 	}
 
 	public void applyPartialSolution(int oldIndex, int newIndex) {
-		System.err.println("partial solution: " + oldIndex + " -> " + newIndex);
 		List<ThistlethwaiteMove> result = new ArrayList<>();
 		if (oldIndex >= 0 && newIndex >= 0) {
 			if (oldIndex < newIndex) {

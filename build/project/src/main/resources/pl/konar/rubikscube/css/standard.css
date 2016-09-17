@@ -1,38 +1,39 @@
-* {
+/** {
 	-colour1: #ffcc66;
 	-colour2: #ff9900;
-}
+}*/
 
 .root {
-	-fx-background-color: #ffff99 ;
+	-fx-background-color: lightgray;
 }
 
-.button {
+/*.button {
 	-fx-background-color: #ff9933;
-}
+}*/
 
-.list-cell:odd {
+/*.list-cell:odd {
 	-fx-background-color: #ffcc33;
-}
+}*/
 
-.list-cell:even {
+/*.list-cell:even {
 	-fx-background-color: #cc9933;
-}
+}*/
 
 .list-cell:selected {
 	-fx-font-size: 175%;
 	-fx-font-weight: bold;
-	-fx-background-color: #ff9900;
+	/*-fx-background-color: #ff9900;*/
 }
 
 .label {
 	-fx-font-size: 11pt;
+	-fx-padding: 5px;
 }
 
 .title {
 	-fx-font-size: 20pt;
 	-fx-font-weight: bold;
-	-fx-text-fill: #ff9900;
+	/*-fx-text-fill: #ff9900;*/
 }
 
 .facet {

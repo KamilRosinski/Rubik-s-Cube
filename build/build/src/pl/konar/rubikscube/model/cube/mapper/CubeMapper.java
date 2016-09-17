@@ -25,7 +25,6 @@ public class CubeMapper {
 			result = checkCenterCubicles(solved, cube) && checkEdgeCubicles(solved, cube)
 					&& checkCornerCubicles(solved, cube);
 		}
-		System.err.println("is mappable: " + result);
 		return result;
 	}
 

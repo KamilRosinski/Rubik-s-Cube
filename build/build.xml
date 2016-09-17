@@ -33,12 +33,12 @@
 		<mkdir dir="project" />
 		<copy todir="project">
 			<fileset dir="C:\Users\karosins\git\Rubik-s-Cube">
-				<include name="src\main\resources/**" />
+				<include name="src\test\java/**" />
 			</fileset>
 		</copy>
 		<copy todir="project">
 			<fileset dir="C:\Users\karosins\git\Rubik-s-Cube">
-				<include name="src\test\java/**" />
+				<include name="src\main\resources/**" />
 			</fileset>
 		</copy>
 		<copy todir="project">
@@ -127,6 +127,7 @@
 		<fx:application id="fxApplication"
 			name="Rubik's Cube Solver"
 			mainClass="pl.konar.rubikscube.application.Startup"
+			toolkit="fx"
 		/>
 	
 		<mkdir dir="build/classes/META-INF" />

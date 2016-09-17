@@ -20,7 +20,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import pl.konar.rubikscube.model.colour.Colour;
 import pl.konar.rubikscube.model.cube.Angle;
 import pl.konar.rubikscube.model.cube.CubeConstants;
@@ -120,34 +119,27 @@ public class CubeSolverController {
 	private void initializeSolutionList() {
 		solutionList.disableProperty().bind(Bindings.not(model.isSolvedProperty()));
 		solutionList.itemsProperty().bind(model.solutionProperty());
-		solutionList.setCellFactory(new Callback<ListView<ThistlethwaiteMove>, ListCell<ThistlethwaiteMove>>() {
-
-			@Override
-			public ListCell<ThistlethwaiteMove> call(ListView<ThistlethwaiteMove> param) {
-				return new ListCell<ThistlethwaiteMove>() {
-
-					@Override
-					protected void updateItem(ThistlethwaiteMove move, boolean empty) {
-						super.updateItem(move, empty);
-						if (empty) {
-							setText("");
-						} else {
-							String text = "";
-							Colour colour = Colour.TRANSPARENT;
-							if (move == null) {
-								text = resources.getString("move.empty");
-							} else {
-								Face face = move.getFace();
-								colour = model.getCube().getColour(face.ordinal());
-								Angle angle = move.getAngle();
-								text = resources.getString("colour." + colour) + " "
-										+ resources.getString("angle." + angle);
-							}
-							setText(text);
+		solutionList.setCellFactory(param -> {
+			return new ListCell<ThistlethwaiteMove>() {
+				@Override
+				protected void updateItem(ThistlethwaiteMove move, boolean empty) {
+					super.updateItem(move, empty);
+					if (empty) {
+						setText("");
+					} else {
+						String text = resources.getString("move.empty");
+						Colour colour = Colour.TRANSPARENT;
+						if (move != null) {
+							Face face = move.getFace();
+							colour = model.getCube().getColour(face.ordinal());
+							Angle angle = move.getAngle();
+							text = resources.getString("colour." + colour) + " "
+									+ resources.getString("angle." + angle);
 						}
+						setText(text);
 					}
-				};
-			}
+				}
+			};
 		});
 		solutionList.getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> {
 			model.applyPartialSolution(oldVal.intValue(), newVal.intValue());
