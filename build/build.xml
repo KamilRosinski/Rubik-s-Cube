@@ -154,7 +154,7 @@
 		<fx:deploy
 			embedJNLP="false"
 			extension="false"
-			width="800" height="600"
+			width="1280" height="1024"
 			includeDT="false"
 			offlineAllowed="true"
 			outdir="${basedir}/deploy"

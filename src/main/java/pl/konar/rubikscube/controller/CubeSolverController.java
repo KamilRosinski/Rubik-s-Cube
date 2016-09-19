@@ -2,17 +2,18 @@ package pl.konar.rubikscube.controller;
 
 import java.net.URL;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.Scene;
+//import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
@@ -20,6 +21,10 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import pl.konar.rubikscube.model.colour.Colour;
 import pl.konar.rubikscube.model.cube.Angle;
 import pl.konar.rubikscube.model.cube.CubeConstants;
@@ -36,7 +41,8 @@ public class CubeSolverController {
 
 	private SolverModel model = new SolverModel();
 
-	private Alert alert = new Alert(AlertType.INFORMATION);
+	// private Alert alert = new Alert(AlertType.INFORMATION);
+	private Stage alert = new Stage();
 
 	@FXML
 	private URL location;
@@ -151,17 +157,26 @@ public class CubeSolverController {
 	}
 
 	private void initializeAlert() {
-		alert.setTitle(resources.getString("alert.title"));
-		alert.setHeaderText(resources.getString("alert.header"));
-		alert.setContentText(resources.getString("alert.content"));
-		alert.getButtonTypes().setAll(ButtonType.CANCEL);
-		alert.setGraphic(new ProgressIndicator());
+		Button abortButton = new Button(resources.getString("alert.abort"));
+		abortButton.setOnAction(event -> alert.hide());
+		alert.initStyle(StageStyle.UTILITY);
+		VBox vBox = new VBox(new Text(resources.getString("alert.content")), new ProgressIndicator(), abortButton);
+		vBox.setAlignment(Pos.CENTER);
+		vBox.setPadding(new Insets(5));
+		vBox.setSpacing(10);
+		Scene scene = new Scene(vBox);
+		alert.initModality(Modality.APPLICATION_MODAL);
+		alert.setScene(scene);
+
+		// alert.setHeaderText(resources.getString("alert.header"));
+		// alert.setContentText(resources.getString("alert.content"));
+		// alert.getButtonTypes().setAll(ButtonType.CANCEL);
+		// alert.setGraphic(new ProgressIndicator());
 	}
 
 	@FXML
 	private void solveButtonAction() {
 		Task<List<ThistlethwaiteMove>> solverTask = new Task<List<ThistlethwaiteMove>>() {
-			// Task<Void> solverTask = new Task<Void>() {
 
 			@Override
 			protected List<ThistlethwaiteMove> call() {
@@ -200,8 +215,9 @@ public class CubeSolverController {
 
 		};
 		new Thread(solverTask).start();
-		Optional<ButtonType> alertResult = alert.showAndWait();
-		if (alertResult.isPresent() && solverTask.isRunning()) {
+		// Optional<ButtonType> alertResult = alert.showAndWait();
+		alert.showAndWait();
+		if (/* alertResult.isPresent() && */ solverTask.isRunning()) {
 			solverTask.cancel();
 		}
 
